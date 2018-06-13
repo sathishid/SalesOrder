@@ -1,5 +1,6 @@
 package com.ara.sunflowerorder.models;
 
+import com.ara.sunflowerorder.utils.AppConstants;
 import com.google.gson.Gson;
 
 public class OrderItem {
@@ -47,5 +48,10 @@ public class OrderItem {
         Gson gson = new Gson();
         OrderItem orderItem = gson.fromJson(json, OrderItem.class);
         return orderItem;
+    }
+
+    public String toJson() {
+        Gson gson = AppConstants.getGson();
+        return gson.toJson(this);
     }
 }

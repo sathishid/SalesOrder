@@ -5,7 +5,8 @@ public class UOM {
     int id;
     String name;
 
-    public UOM(){}
+    public UOM() {
+    }
 
     public UOM(int id, String name) {
         this.id = id;
@@ -26,5 +27,10 @@ public class UOM {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

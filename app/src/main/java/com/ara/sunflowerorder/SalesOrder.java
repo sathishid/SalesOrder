@@ -23,6 +23,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.ADD_ITEM_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.DATE_PICKER_DELIVERY_TAG;
 import static com.ara.sunflowerorder.utils.AppConstants.DATE_PICKER_ORDER_TAG;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_ADD_ITEM;
+import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_CUSTOMER;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
@@ -63,7 +64,7 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
         switch (requestCode) {
             case SEARCH_CUSTOMER_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    String json = data.getStringExtra(EXTRA_SELECTED_CUSTOMER);
+                    String json = data.getStringExtra(EXTRA_SEARCH_RESULT);
                     Customer customer = Customer.fromJSON(json);
                     customer_tv.setText(customer.getName());
                     salesOrderModel.setCustomer(customer);
@@ -76,6 +77,7 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
                     salesOrderModel.addItem(item);
                 }
                 break;
+
         }
 
     }
@@ -93,7 +95,7 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
 
     @OnClick(R.id.btn_order_add_item)
     public void onAddItemClick(View view) {
-        Intent addItemIntent = new Intent(this, OrderItem.class);
+        Intent addItemIntent = new Intent(this, com.ara.sunflowerorder.OrderItem.class);
         startActivityForResult(addItemIntent, ADD_ITEM_REQUEST);
     }
 

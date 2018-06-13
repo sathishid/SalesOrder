@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_CUSTOMER;
+import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_BRAND_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
@@ -65,7 +65,12 @@ public class SearchHelper extends AppCompatActivity {
 
     @OnClick(R.id.search_btn)
     public void searchName(View view) {
-        HttpRequest httpRequest =getHttpRequest();
+        HttpRequest httpRequest = getHttpRequest();
+        if (httpRequest == null) {
+            Snackbar.make(listViewItems, "Mr Developer: Please set the Request Code:",
+                    Snackbar.LENGTH_INDEFINITE).show();
+            return;
+        }
         new HttpCaller(this, "Loading data..") {
             @Override
             public void onResponse(HttpResponse response) {
@@ -114,16 +119,26 @@ public class SearchHelper extends AppCompatActivity {
 
     @OnItemClick(R.id.list_view_items)
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        String result = null;
         switch (requestCode) {
             case SEARCH_CUSTOMER_REQUEST:
-                Intent customerListResult = new Intent();
+
                 Customer selectedCustomer = (Customer) listViewItems.getAdapter().getItem(position);
-                customerListResult.putExtra(EXTRA_SELECTED_CUSTOMER, selectedCustomer.toJson());
-                setResult(RESULT_OK, customerListResult);
-                finish();
+                result = selectedCustomer.toJson();
+                break;
+            case SEARCH_BRAND_REQUEST:
+                Brand brand = (Brand) listViewItems.getAdapter().getItem(position);
+                result = brand.toJson();
+                break;
+            case SEARCH_PRODUCT_REQUEST:
+                Product product = (Product) listViewItems.getAdapter().getItem(position);
+                result = product.toJson();
                 break;
         }
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_SEARCH_RESULT, result);
+        setResult(RESULT_OK, intent);
+        finish();
 
     }
 }

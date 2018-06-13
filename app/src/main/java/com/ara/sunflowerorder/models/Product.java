@@ -1,7 +1,13 @@
 package com.ara.sunflowerorder.models;
 
+import com.ara.sunflowerorder.utils.AppConstants;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ara.sunflowerorder.utils.AppConstants.UOM_ARRAY;
+import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class Product {
     private int id;
@@ -85,14 +91,31 @@ public class Product {
         ArrayList<Product> products = new ArrayList<>();
         products.add(new Product(1, "GMail", 1, 45.5,
                 new Brand(1, "Google"),
-                new UOM(4, "hrs"), "GM"));
+                UOM_ARRAY[4],
+                "GM"
+        ));
         products.add(new Product(1, "IPhone SE", 5, 45.5,
                 new Brand(1, "Apple"),
-                new UOM(4, "Piece"), "IPhone"));
+                UOM_ARRAY[3], "IPhone"));
         return products;
 
     }
-    public String toString(){
-        return brand.getName()+"\n"+name+"\t"+price;
+
+    public String toString() {
+        return this.name;
+    }
+
+    public String toJson() {
+        Gson gson = getGson();
+        return gson.toJson(this);
+    }
+
+    public static Product fromJSON(String result) {
+        if (result == null || result.isEmpty()) {
+            return new Product();
+        }
+        Gson gson = new Gson();
+        Product product = gson.fromJson(result, Product.class);
+        return product;
     }
 }
