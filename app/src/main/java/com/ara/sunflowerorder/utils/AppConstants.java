@@ -4,12 +4,15 @@ import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
+import com.ara.sunflowerorder.models.SalesOrder;
 import com.ara.sunflowerorder.models.UOM;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AppConstants {
+    public static final ArrayList<SalesOrder> SalesOrderList=new ArrayList<>();
 
     public static final UOM[] UOM_ARRAY = {
             new UOM(1, "Gram"),
@@ -21,6 +24,7 @@ public class AppConstants {
     public static final int SEARCH_CUSTOMER_REQUEST = 101;
     public static final int SEARCH_BRAND_REQUEST = 102;
     public static final int SEARCH_PRODUCT_REQUEST = 103;
+    public static final int ADD_SALES_ORDER_REQUEST=104;
     public static final String EXTRA_SEARCH_RESULT = "SearchResult";
     public static final int ADD_ITEM_REQUEST = 104;
 

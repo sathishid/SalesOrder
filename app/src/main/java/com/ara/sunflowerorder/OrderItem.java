@@ -2,6 +2,7 @@ package com.ara.sunflowerorder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -54,7 +55,7 @@ public class OrderItem extends AppCompatActivity {
         setContentView(R.layout.activity_order_item);
         ButterKnife.bind(this);
         orderItemModel = new com.ara.sunflowerorder.models.OrderItem();
-        editOrderQty.setText("1");
+        orderItemModel.setQuantity(1);
         ArrayAdapter<UOM> uoms = new ArrayAdapter<>(this,
                 R.layout.support_simple_spinner_dropdown_item,
                 UOM_ARRAY);
@@ -80,6 +81,8 @@ public class OrderItem extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK)
+            return;
         String result = data.getStringExtra(EXTRA_SEARCH_RESULT);
         switch (requestCode) {
             case SEARCH_BRAND_REQUEST:
@@ -105,6 +108,9 @@ public class OrderItem extends AppCompatActivity {
 
     @OnClick(R.id.btn_order_an_item)
     public void sendItem(View view) {
+        if (!validate()) {
+            return;
+        }
         UOM uom = (UOM) spinnerOrderUOM.getSelectedItem();
         orderItemModel.getProduct().setUom(uom);
         String tempText = editOrderQty.getText().toString();
@@ -116,5 +122,21 @@ public class OrderItem extends AppCompatActivity {
         intent.putExtra(AppConstants.EXTRA_ADD_ITEM, json);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    private void showSnackbar(String message) {
+        Snackbar.make(tvBrandName, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    private boolean validate() {
+        if (brand == null) {
+            showSnackbar("Please select the Brand.");
+            return false;
+        }
+        if (orderItemModel.getProduct() == null) {
+            showSnackbar("Please select the product.");
+            return false;
+        }
+        return true;
     }
 }

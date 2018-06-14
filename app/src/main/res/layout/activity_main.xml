@@ -10,6 +10,7 @@
     >
 
     <LinearLayout
+        android:id="@+id/layout_linear_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

@@ -48,25 +48,42 @@
                 android:id="@+id/tv_order_product_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.25"
                 android:text="@string/product_code" />
 
             <Spinner
                 android:id="@+id/spinner_order_uom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_order_available_qty"
+        <LinearLayout
+            android:id="@+id/layout_avail_qty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
-            android:text="@string/available_quantity"
-            app:layout_constraintTop_toBottomOf="@id/layout_product_uom" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/layout_product_uom">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:text="@string/available_quantity" />
+
+            <TextView
+
+                android:id="@+id/tv_order_available_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingRight="@dimen/item_spacing"
+                android:text="1" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/edit_order_qty"
@@ -74,7 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
             android:hint="@string/order_quantity"
-            app:layout_constraintTop_toBottomOf="@id/tv_order_available_qty" />
+            android:inputType="number"
+            app:layout_constraintTop_toBottomOf="@id/layout_avail_qty" />
 
         <EditText
             android:id="@+id/edit_order_price"
@@ -82,6 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
             android:hint="@string/price"
+            android:inputType="numberDecimal"
             app:layout_constraintTop_toBottomOf="@id/edit_order_qty" />
 
         <TextView

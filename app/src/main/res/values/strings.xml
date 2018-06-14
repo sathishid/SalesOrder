@@ -15,6 +15,7 @@
     <string name="price">Price</string>
     <string name="total_amount">Total Amount</string>
     <string name="add_order_item">Add an Order Item</string>
+    <string name="submit_order">Submit Order</string>
     <string-array name="payment_mode">
         <item>Cash</item>
         <item>Credit</item>

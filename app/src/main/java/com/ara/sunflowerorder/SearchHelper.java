@@ -83,6 +83,13 @@ public class SearchHelper extends AppCompatActivity {
         }.execute(httpRequest);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        setResult(RESULT_CANCELED, intent);
+        finish();
+    }
+
     private void setListView(String json) {
         switch (requestCode) {
             case SEARCH_CUSTOMER_REQUEST:
