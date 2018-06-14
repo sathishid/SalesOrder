@@ -66,4 +66,12 @@ public class AppConstants {
         }
         return -1;
     }
+
+    public static String formatPrice(double price) {
+        return String.format("%8.2f", price).trim();
+    }
+
+    public static String formatQuantity(int qty) {
+        return String.format("%d", qty).trim();
+    }
 }

@@ -72,5 +72,15 @@
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/layout_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layout_mode_btn_add"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
     </RelativeLayout>
 </ScrollView>
