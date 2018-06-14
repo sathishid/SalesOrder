@@ -26,6 +26,7 @@ import butterknife.OnItemClick;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_BRAND_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_PRODUCT_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.getBrandListURL;
@@ -35,6 +36,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.getProductListURL;
 public class SearchHelper extends AppCompatActivity {
 
     int requestCode;
+    boolean disableSearch;
     @BindView(R.id.list_view_items)
     ListView listViewItems;
 
@@ -44,7 +46,6 @@ public class SearchHelper extends AppCompatActivity {
         setContentView(R.layout.activity_search_helper);
         ButterKnife.bind(this);
         requestCode = getIntent().getIntExtra(REQUEST_CODE, -1);
-
     }
 
     private HttpRequest getHttpRequest() {
@@ -58,6 +59,9 @@ public class SearchHelper extends AppCompatActivity {
                 break;
             case SEARCH_PRODUCT_REQUEST:
                 httpRequest = new HttpRequest(getProductListURL(), HttpRequest.GET);
+                break;
+            case SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST:
+                httpRequest = new HttpRequest(getCustomerListURL(), HttpRequest.GET);
                 break;
         }
         return httpRequest;
@@ -93,6 +97,7 @@ public class SearchHelper extends AppCompatActivity {
     private void setListView(String json) {
         switch (requestCode) {
             case SEARCH_CUSTOMER_REQUEST:
+            case SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST:
                 List<Customer> customerList = Customer.fromJSONArray(json);
                 ArrayAdapter<Customer> customers = new ArrayAdapter<Customer>(
                         listViewItems.getContext(),
@@ -120,8 +125,6 @@ public class SearchHelper extends AppCompatActivity {
                 listViewItems.setAdapter(products);
                 break;
         }
-
-
     }
 
     @OnItemClick(R.id.list_view_items)
@@ -129,7 +132,7 @@ public class SearchHelper extends AppCompatActivity {
         String result = null;
         switch (requestCode) {
             case SEARCH_CUSTOMER_REQUEST:
-
+            case SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST:
                 Customer selectedCustomer = (Customer) listViewItems.getAdapter().getItem(position);
                 result = selectedCustomer.toJson();
                 break;

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/icon_button"
+    tools:context=".DeliveryItemActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_delivery_product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_spacing"
+            android:text="@string/product_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_delivery_product_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_spacing"
+            android:layout_weight="0.25"
+            android:text="@string/product_code"
+            app:layout_constraintTop_toBottomOf="@+id/tv_delivery_product_name" />
+
+        <LinearLayout
+            android:id="@+id/layout_avail_qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_spacing"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery_product_code">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:text="@string/ordered_quantity" />
+
+            <TextView
+
+                android:id="@+id/tv_ordered_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingRight="@dimen/item_spacing"
+                android:text="1" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edit_accepted_qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_spacing"
+            android:hint="@string/accept_qty"
+            android:inputType="number"
+            app:layout_constraintTop_toBottomOf="@id/layout_avail_qty" />
+
+        <EditText
+            android:id="@+id/edit_rejected_qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_spacing"
+            android:hint="@string/rejected_quantity"
+            android:inputType="number"
+            app:layout_constraintTop_toBottomOf="@id/edit_accepted_qty" />
+
+
+        <Button
+            android:id="@+id/btn_deliver_an_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_spacing"
+            android:drawableRight="@drawable/ic_add"
+            android:text="@string/add_item"
+            app:layout_constraintTop_toBottomOf="@id/edit_rejected_qty" />
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

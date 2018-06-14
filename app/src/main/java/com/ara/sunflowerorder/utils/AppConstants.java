@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AppConstants {
-    public static final ArrayList<SalesOrder> SalesOrderList=new ArrayList<>();
+    public static final ArrayList<SalesOrder> SalesOrderList = new ArrayList<>();
 
     public static final UOM[] UOM_ARRAY = {
             new UOM(1, "Gram"),
@@ -24,16 +24,24 @@ public class AppConstants {
     public static final int SEARCH_CUSTOMER_REQUEST = 101;
     public static final int SEARCH_BRAND_REQUEST = 102;
     public static final int SEARCH_PRODUCT_REQUEST = 103;
-    public static final int ADD_SALES_ORDER_REQUEST=104;
-    public static final String EXTRA_SEARCH_RESULT = "SearchResult";
-    public static final int ADD_ITEM_REQUEST = 104;
+    public static final int ADD_SALES_ORDER_REQUEST = 104;
 
+    public static final int ADD_ITEM_REQUEST = 105;
+    public static final int SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST = 106;
+    public static final int LIST_APPROVE_ID_REQUEST = 107;
+    public static final int ADD_DELIVERY_REQUEST = 108;
+    public static final int DELIVERY_ITEM_EDIT_REQUEST=109;
+
+    public static final String EXTRA_SEARCH_RESULT = "SearchResult";
     public static final String EXTRA_SELECTED_CUSTOMER = "selectedCustomer";
     public static final String EXTRA_ADD_ITEM = "OrderItem";
     public static final String REQUEST_CODE = "RequestCode";
+    public static final String EXTRA_SELECTED_DELIVERY_ITEM="selecteDeliveryItem";
+    public static final String EXTRA_SELECTED_ITEM_INDEX="SelectedIndex";
 
     public static final String DATE_PICKER_ORDER_TAG = "Pick a Order Date";
     public static final String DATE_PICKER_DELIVERY_TAG = "Pick a Delivery Date";
+
     public static final String ADD_ITEM_RESULT = "AddAnItemResult";
 
     public static String getCustomerListURL() {

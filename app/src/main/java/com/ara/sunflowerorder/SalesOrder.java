@@ -56,6 +56,7 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_order);
+        getSupportActionBar().hide();
         mRecyclerView = (RecyclerView) findViewById(R.id.order_item_list_view);
 
         // use this setting to improve performance if you know that changes

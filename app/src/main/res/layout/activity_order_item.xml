@@ -36,24 +36,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_order_brandName" />
 
+        <TextView
+            android:id="@+id/tv_order_product_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_spacing"
+            android:layout_weight="0.25"
+            android:text="@string/product_code"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_product_name" />
+
         <LinearLayout
             android:id="@+id/layout_product_uom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/tv_order_product_name">
+            app:layout_constraintTop_toBottomOf="@id/tv_order_product_code">
 
             <TextView
-                android:id="@+id/tv_order_product_code"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="@string/product_code" />
+                android:text="UOM" />
 
             <Spinner
                 android:id="@+id/spinner_order_uom"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 

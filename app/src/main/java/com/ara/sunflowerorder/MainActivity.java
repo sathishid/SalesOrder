@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static com.ara.sunflowerorder.utils.AppConstants.ADD_DELIVERY_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.ADD_SALES_ORDER_REQUEST;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,12 +20,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
     }
 
     public void sales_order_onClick(View view) {
         Intent salesOrderActivity = new Intent(this, SalesOrder.class);
         startActivityForResult(salesOrderActivity, ADD_SALES_ORDER_REQUEST);
+    }
+
+    @OnClick(R.id.btn_main_delivery)
+    public void delivery(View view) {
+        Intent salesOrderActivity = new Intent(this, DeliveryActivity.class);
+        startActivityForResult(salesOrderActivity, ADD_DELIVERY_REQUEST);
     }
 
     @Override
@@ -34,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case ADD_SALES_ORDER_REQUEST:
                 Snackbar.make(linearyLayout, "Sales Order Submitted Successfully", Snackbar.LENGTH_LONG).show();
+                break;
+            case ADD_DELIVERY_REQUEST:
+                Snackbar.make(linearyLayout, "Delivery Info Submitted Successfully", Snackbar.LENGTH_LONG).show();
                 break;
         }
     }

@@ -29,6 +29,7 @@
             />
 
         <Button
+            android:id="@+id/btn_main_delivery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_delivery"

@@ -24,12 +24,13 @@
             android:name=".SalesOrder"
             android:label="@string/sales_order" />
         <activity
-            android:name=".CustomerList"
-            android:label="@string/select_customer" />
-        <activity
             android:name=".OrderItem"
             android:label="@string/add_order_item" />
-        <activity android:name=".SearchHelper"></activity>
+        <activity android:name=".SearchHelper" />
+        <activity android:name=".DeliveryActivity" />
+        <activity android:name=".ListHelperActivity" />
+        <activity android:name=".DeliveryItemActivity" />
+        <activity android:name=".CommentActivity"></activity>
     </application>
 
 </manifest>
