@@ -15,13 +15,15 @@ import com.ara.sunflowerorder.models.Product;
 import com.ara.sunflowerorder.models.UOM;
 import com.ara.sunflowerorder.utils.AppConstants;
 
+import org.w3c.dom.Text;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
-import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_BRAND_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.LIST_BRAND_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_PRODUCT_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.UOM_ARRAY;
 
@@ -37,8 +39,8 @@ public class OrderItem extends AppCompatActivity {
     @BindView(R.id.tv_order_product_code)
     TextView tvProductCode;
 
-    @BindView(R.id.spinner_order_uom)
-    Spinner spinnerOrderUOM;
+    @BindView(R.id.tv_order_uom)
+    TextView textViewOrderUOM;
     @BindView(R.id.edit_order_qty)
     EditText editOrderQty;
     @BindView(R.id.edit_order_price)
@@ -56,10 +58,7 @@ public class OrderItem extends AppCompatActivity {
         ButterKnife.bind(this);
         orderItemModel = new com.ara.sunflowerorder.models.OrderItem();
         orderItemModel.setQuantity(1);
-        ArrayAdapter<UOM> uoms = new ArrayAdapter<>(this,
-                R.layout.support_simple_spinner_dropdown_item,
-                UOM_ARRAY);
-        spinnerOrderUOM.setAdapter(uoms);
+
     }
 
     @OnClick({R.id.tv_order_product_name, R.id.tv_order_brandName})
@@ -72,9 +71,9 @@ public class OrderItem extends AppCompatActivity {
                 startActivityForResult(chooseProduct, SEARCH_PRODUCT_REQUEST);
                 break;
             case R.id.tv_order_brandName:
-                Intent chooseBrand = new Intent(this, SearchHelper.class);
-                chooseBrand.putExtra(REQUEST_CODE, SEARCH_BRAND_REQUEST);
-                startActivityForResult(chooseBrand, SEARCH_BRAND_REQUEST);
+                Intent chooseBrand = new Intent(this, ListHelperActivity.class);
+                chooseBrand.putExtra(REQUEST_CODE, LIST_BRAND_REQUEST);
+                startActivityForResult(chooseBrand, LIST_BRAND_REQUEST);
                 break;
         }
     }
@@ -85,7 +84,7 @@ public class OrderItem extends AppCompatActivity {
             return;
         String result = data.getStringExtra(EXTRA_SEARCH_RESULT);
         switch (requestCode) {
-            case SEARCH_BRAND_REQUEST:
+            case LIST_BRAND_REQUEST:
                 this.brand = Brand.fromJSON(result);
                 tvBrandName.setText(this.brand.getName());
                 break;
@@ -98,9 +97,7 @@ public class OrderItem extends AppCompatActivity {
                 tvAvailableQty.setText(String.format("%d", product.getAvailableQty()));
                 editTextOrderPrice.setText(String.format("%8.2f", product.getPrice()).trim());
                 tvProductCode.setText(product.getCode());
-                int index = AppConstants.getUOMSpinnerIndex(this, product.getUom().getId());
-
-                spinnerOrderUOM.setSelection(index);
+                textViewOrderUOM.setText(product.getUom());
                 tvTotalAmount.setText(String.format("%8.2f", product.getPrice()).trim());
                 break;
         }
@@ -111,8 +108,7 @@ public class OrderItem extends AppCompatActivity {
         if (!validate()) {
             return;
         }
-        UOM uom = (UOM) spinnerOrderUOM.getSelectedItem();
-        orderItemModel.getProduct().setUom(uom);
+
         String tempText = editOrderQty.getText().toString();
         orderItemModel.setQuantity(Integer.parseInt(tempText));
         tempText = editTextOrderPrice.getText().toString();

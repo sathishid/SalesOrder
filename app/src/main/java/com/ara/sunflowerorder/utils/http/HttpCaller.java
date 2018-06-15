@@ -7,8 +7,6 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ara.sunflowerorder.R;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -73,9 +71,9 @@ public class HttpCaller extends AsyncTask<HttpRequest, String, HttpResponse> {
                         .post(httpRequest.getRequestBody())
                         .build();
             } else {
+
                 request = new Request.Builder()
-                        .url(httpRequest.getUrl())
-                        .get()
+                        .url(httpRequest.getURLWithParam())
                         .build();
             }
             Response response = client.newCall(request).execute();

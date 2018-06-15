@@ -1,22 +1,34 @@
 package com.ara.sunflowerorder.models;
 
 import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class Customer {
+    @SerializedName("customer_id")
     private int id;
+    @SerializedName("customer_name")
     private String name;
+    @SerializedName("customer_code")
+    private String code;
+
 
     public Customer(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public int getId() {
@@ -44,7 +56,7 @@ public class Customer {
         if (json == null || json.isEmpty()) {
             return new Customer(-1, "");
         }
-        Gson gson = new Gson();
+        Gson gson = getGson();
         Customer customer = gson.fromJson(json, Customer.class);
         return customer;
     }
@@ -53,23 +65,9 @@ public class Customer {
         if (json == null || json.isEmpty()) {
             return new ArrayList<>(0);
         }
-
-       /* Gson gson = new Gson();
+        Gson gson = getGson();
         Customer[] customers = gson.fromJson(json, Customer[].class);
-        return Arrays.asList(customers);*/
-        try {
-
-            JSONArray jsonArray = new JSONArray(json);
-            Customer customer = null;
-            ArrayList<Customer> customers = new ArrayList<>(jsonArray.length());
-            for (int i = 0; i < jsonArray.length(); i++) {
-                customer = new Customer(i, jsonArray.getString(i));
-                customers.add(customer);
-            }
-            return customers;
-        } catch (JSONException jsonException) {
-            return new ArrayList<>(0);
-        }
+        return Arrays.asList(customers);
     }
 
     public String toJson() {

@@ -2,7 +2,9 @@ package com.ara.sunflowerorder.utils.http;
 
 
 import java.util.HashMap;
+import java.util.Set;
 
+import okhttp3.HttpUrl;
 import okhttp3.RequestBody;
 
 /**
@@ -80,6 +82,11 @@ public class HttpRequest {
 
     }
 
+    public void addParam(String name, String value) {
+        HashMap<String, String> params = getParams();
+        params.put(name, value);
+    }
+
     public void setParams(HashMap<String, String> params) {
         this.params = params;
     }
@@ -90,6 +97,17 @@ public class HttpRequest {
 
     public void setRequestBody(RequestBody requestBody) {
         this.requestBody = requestBody;
+    }
+
+    public String getURLWithParam() {
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(getUrl()).newBuilder();
+        HashMap<String, String> params = getParams();
+        Set<String> paramNames = params.keySet();
+        for (String paramName : paramNames) {
+            urlBuilder.addQueryParameter(paramName, params.get(paramName));
+        }
+        String url = urlBuilder.build().toString();
+        return url;
     }
 }
 

@@ -7,16 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItem {
-    public static final List<OrderItem> ITEMS =new ArrayList<>();
 
-    static {
-        Product product=Product.fromJSONArray(null).get(0);
-        OrderItem orderItem=new OrderItem();
-        orderItem.setPrice(5);
-        orderItem.setQuantity(10);
-        orderItem.setProduct(product);
-        ITEMS.add(orderItem);
-    }
     private int id;
     private Product product;
     private int quantity;

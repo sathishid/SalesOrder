@@ -1,27 +1,31 @@
 package com.ara.sunflowerorder.models;
 
-import com.ara.sunflowerorder.utils.AppConstants;
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static com.ara.sunflowerorder.utils.AppConstants.UOM_ARRAY;
 import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class Product {
+    @SerializedName("product_id")
     private int id;
+    @SerializedName("product_name")
     private String name;
     private int availableQty;
+    @SerializedName("product_rate")
     private double price;
     private Brand brand;
-    private UOM uom;
+    @SerializedName("uom_name")
+    private String uom;
+    @SerializedName("product_code")
     private String code;
 
     public Product() {
     }
 
-    public Product(int id, String name, int availableQty, double price, Brand brand, UOM uom, String code) {
+    public Product(int id, String name, int availableQty, double price, Brand brand, String uom, String code) {
         this.id = id;
         this.name = name;
         this.availableQty = availableQty;
@@ -71,11 +75,11 @@ public class Product {
         this.brand = brand;
     }
 
-    public UOM getUom() {
+    public String getUom() {
         return uom;
     }
 
-    public void setUom(UOM uom) {
+    public void setUom(String uom) {
         this.uom = uom;
     }
 
@@ -88,16 +92,10 @@ public class Product {
     }
 
     public static List<Product> fromJSONArray(String json) {
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(1, "GMail", 1, 45.5,
-                new Brand(1, "Google"),
-                UOM_ARRAY[4],
-                "GM"
-        ));
-        products.add(new Product(1, "IPhone SE", 5, 45.5,
-                new Brand(1, "Apple"),
-                UOM_ARRAY[3], "IPhone"));
-        return products;
+
+        Gson gson = getGson();
+        Product[] products = gson.fromJson(json, Product[].class);
+        return Arrays.asList(products);
 
     }
 

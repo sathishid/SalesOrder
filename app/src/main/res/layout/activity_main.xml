@@ -23,10 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_sales_order"
-            android:padding="@dimen/icon_button"
-            android:text="@string/sales_order"
             android:onClick="sales_order_onClick"
-            />
+            android:padding="@dimen/icon_button"
+            android:text="@string/sales_order" />
 
         <Button
             android:id="@+id/btn_main_delivery"
@@ -36,6 +35,7 @@
             android:text="@string/delivery" />
 
         <Button
+            android:id="@+id/btn_main_collection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_collection"

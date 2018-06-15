@@ -1,17 +1,22 @@
 package com.ara.sunflowerorder.models;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class Brand {
+    @SerializedName("brand_id")
     private int id;
+    @SerializedName("brand_name")
     private String name;
 
-    public Brand(){ }
+    public Brand() {
+    }
+
     public Brand(int id, String name) {
         this.id = id;
         this.name = name;
@@ -34,12 +39,10 @@ public class Brand {
     }
 
     public static List<Brand> fromJSONArray(String json) {
-        ArrayList<Brand> brands=new ArrayList<>(3);
-
-        brands.add(new Brand(1,"Google"));
-        brands.add(new Brand(1,"Apple"));
-        brands.add(new Brand(1,"Microsoft"));
-        return brands;
+        Gson gson = getGson();
+        Brand[] brands = gson.fromJson(json, Brand[].class);
+        List<Brand> brandList = Arrays.asList(brands);
+        return brandList;
     }
 
     @Override

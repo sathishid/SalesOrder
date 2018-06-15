@@ -30,7 +30,8 @@
         <activity android:name=".DeliveryActivity" />
         <activity android:name=".ListHelperActivity" />
         <activity android:name=".DeliveryItemActivity" />
-        <activity android:name=".CommentActivity"></activity>
+        <activity android:name=".CommentActivity" />
+        <activity android:name=".CollectionActivity"></activity>
     </application>
 
 </manifest>

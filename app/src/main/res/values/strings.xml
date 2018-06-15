@@ -27,9 +27,13 @@
     <string name="remarks">Remarks</string>
     <string name="ok">OK</string>
     <string name="enter_remarks">Enter Remarks</string>
+    <string-array name="transaction_type">
+        <item>Credit</item>
+        <item>Cash</item>
+    </string-array>
     <string-array name="payment_mode">
         <item>Cash</item>
-        <item>Credit</item>
+        <item>Bank</item>
     </string-array>
     <string-array name="unit_of_measurement">
         <item>Gram</item>

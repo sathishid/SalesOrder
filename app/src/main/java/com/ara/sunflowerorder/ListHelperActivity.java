@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.ara.sunflowerorder.models.Brand;
 import com.ara.sunflowerorder.models.Delivery;
 import com.ara.sunflowerorder.utils.http.HttpCaller;
 import com.ara.sunflowerorder.utils.http.HttpRequest;
@@ -19,10 +20,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
-import butterknife.OnItemSelected;
 
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_APPROVE_ID_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.LIST_BRAND_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.getBrandListURL;
 
@@ -46,6 +47,9 @@ public class ListHelperActivity extends AppCompatActivity {
         HttpRequest httpRequest = null;
         switch (requestCode) {
             case LIST_APPROVE_ID_REQUEST:
+                httpRequest = new HttpRequest(getBrandListURL(), HttpRequest.GET);
+                break;
+            case LIST_BRAND_REQUEST:
                 httpRequest = new HttpRequest(getBrandListURL(), HttpRequest.GET);
                 break;
         }
@@ -82,6 +86,15 @@ public class ListHelperActivity extends AppCompatActivity {
                 );
                 listView.setAdapter(deliveryArrayAdapter);
                 break;
+            case LIST_BRAND_REQUEST:
+                List<Brand> brandList = Brand.fromJSONArray(json);
+                ArrayAdapter<Brand> brands = new ArrayAdapter<Brand>(
+                        listView.getContext(),
+                        R.layout.support_simple_spinner_dropdown_item,
+                        brandList
+                );
+                listView.setAdapter(brands);
+                break;
         }
 
     }
@@ -100,6 +113,10 @@ public class ListHelperActivity extends AppCompatActivity {
             case LIST_APPROVE_ID_REQUEST:
                 Delivery delivery = (Delivery) listView.getAdapter().getItem(position);
                 result = delivery.toJson();
+                break;
+            case LIST_BRAND_REQUEST:
+                Brand brand = (Brand) listView.getAdapter().getItem(position);
+                result = brand.toJson();
                 break;
 
         }

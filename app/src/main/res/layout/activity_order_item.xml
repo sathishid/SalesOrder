@@ -56,11 +56,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
+                android:layout_weight="1.25"
                 android:text="UOM" />
 
-            <Spinner
-                android:id="@+id/spinner_order_uom"
+            <TextView
+                android:id="@+id/tv_order_uom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
