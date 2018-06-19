@@ -68,11 +68,11 @@ public class DeliveryItemAdapter extends RecyclerView.Adapter<DeliveryItemAdapte
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mProductNameView = (TextView) view.findViewById(R.id.dli_tv_product_name);
-            mProductCode = (TextView) view.findViewById(R.id.dli_tv_product_code);
-            mOrderedQty = (TextView) view.findViewById(R.id.dli_tv_ordered_qty);
-            mAcceptedQty = (TextView) view.findViewById(R.id.dli_tv_accepted_qty);
-            mRejectedQty = (TextView) view.findViewById(R.id.dli_tv_rejected_qty);
+            mProductNameView = view.findViewById(R.id.dli_tv_product_name);
+            mProductCode = view.findViewById(R.id.dli_tv_product_code);
+            mOrderedQty = view.findViewById(R.id.dli_tv_ordered_qty);
+            mAcceptedQty = view.findViewById(R.id.dli_tv_accepted_qty);
+            mRejectedQty = view.findViewById(R.id.dli_tv_rejected_qty);
         }
 
         @Override

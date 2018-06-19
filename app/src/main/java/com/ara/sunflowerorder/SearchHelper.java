@@ -11,7 +11,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
 import com.ara.sunflowerorder.models.Customer;
-import com.ara.sunflowerorder.models.Product;
 import com.ara.sunflowerorder.utils.http.HttpCaller;
 import com.ara.sunflowerorder.utils.http.HttpRequest;
 import com.ara.sunflowerorder.utils.http.HttpResponse;
@@ -28,9 +27,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
-import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_PRODUCT_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.getCustomerListURL;
-import static com.ara.sunflowerorder.utils.AppConstants.getProductListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class SearchHelper extends AppCompatActivity {
@@ -57,10 +54,6 @@ public class SearchHelper extends AppCompatActivity {
             case SEARCH_CUSTOMER_REQUEST:
                 httpRequest = new HttpRequest(getCustomerListURL(), HttpRequest.GET);
                 httpRequest.addParam(CUSTOMER_NAME_PARAM, search);
-                break;
-
-            case SEARCH_PRODUCT_REQUEST:
-                httpRequest = new HttpRequest(getProductListURL(), HttpRequest.GET);
                 break;
             case SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST:
                 httpRequest = new HttpRequest(getCustomerListURL(), HttpRequest.GET);
@@ -115,15 +108,6 @@ public class SearchHelper extends AppCompatActivity {
                 listViewItems.setAdapter(customers);
                 break;
 
-            case SEARCH_PRODUCT_REQUEST:
-                List<Product> productList = Product.fromJSONArray(json);
-                ArrayAdapter<Product> products = new ArrayAdapter<Product>(
-                        listViewItems.getContext(),
-                        R.layout.support_simple_spinner_dropdown_item,
-                        productList
-                );
-                listViewItems.setAdapter(products);
-                break;
         }
     }
 
@@ -135,11 +119,6 @@ public class SearchHelper extends AppCompatActivity {
             case SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST:
                 Customer selectedCustomer = (Customer) listViewItems.getAdapter().getItem(position);
                 result = selectedCustomer.toJson();
-                break;
-
-            case SEARCH_PRODUCT_REQUEST:
-                Product product = (Product) listViewItems.getAdapter().getItem(position);
-                result = product.toJson();
                 break;
         }
         Intent intent = new Intent();

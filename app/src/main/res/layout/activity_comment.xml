@@ -8,7 +8,6 @@
     android:layout_margin="@dimen/item_spacing">
 
     <EditText
-        android:id="@+id/tv_comments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -19,7 +18,6 @@
        />
 
     <Button
-        android:id="@+id/btn_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 

@@ -1,6 +1,14 @@
 package com.ara.sunflowerorder.models;
 
+import com.google.gson.Gson;
+
 import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+
+import static com.ara.sunflowerorder.utils.AppConstants.JSON_MEDIA_TYPE;
+import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class Collection {
     private int id;
@@ -57,5 +65,16 @@ public class Collection {
 
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String toJson() {
+        Gson gson = getGson();
+        return gson.toJson(this);
+    }
+
+    public RequestBody toRequestBody() {
+
+        RequestBody requestBody = RequestBody.create(JSON_MEDIA_TYPE, this.toJson());
+        return requestBody;
     }
 }

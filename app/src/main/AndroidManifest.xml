@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +33,13 @@
         <activity android:name=".ListHelperActivity" />
         <activity android:name=".DeliveryItemActivity" />
         <activity android:name=".CommentActivity" />
-        <activity android:name=".CollectionActivity"></activity>
+        <activity android:name=".CollectionActivity" />
+        <activity android:name=".InvoceItemActivity" />
+        <activity
+            android:name=".DeliveryReportActivity"
+            android:label="Delivery Report" />
+        <activity android:name=".SalesOrderReportActivity" />
+        <activity android:name=".CollectionReportActivity"></activity>
     </application>
 
 </manifest>

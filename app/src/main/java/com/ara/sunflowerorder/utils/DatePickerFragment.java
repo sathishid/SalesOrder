@@ -12,9 +12,7 @@ public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
     public static String dateToString(Calendar calendar) {
-        return calendar.get(Calendar.DATE) + "-"
-                + calendar.get(Calendar.MONTH) + "-"
-                + calendar.get(Calendar.YEAR);
+        return AppConstants.dateToString(calendar);
     }
 
     @Override

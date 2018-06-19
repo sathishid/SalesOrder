@@ -16,6 +16,9 @@ import com.ara.sunflowerorder.models.OrderItem;
 import com.ara.sunflowerorder.utils.AppConstants;
 import com.ara.sunflowerorder.utils.DatePickerFragment;
 import com.ara.sunflowerorder.utils.DatePickerListener;
+import com.ara.sunflowerorder.utils.http.HttpCaller;
+import com.ara.sunflowerorder.utils.http.HttpRequest;
+import com.ara.sunflowerorder.utils.http.HttpResponse;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +36,8 @@ import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.SalesOrderList;
 import static com.ara.sunflowerorder.utils.AppConstants.formatPrice;
+import static com.ara.sunflowerorder.utils.AppConstants.getCollectionSubmitURL;
+import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class SalesOrder extends AppCompatActivity implements DatePickerListener {
     private RecyclerView mRecyclerView;
@@ -57,7 +62,7 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_order);
         getSupportActionBar().hide();
-        mRecyclerView = (RecyclerView) findViewById(R.id.order_item_list_view);
+        mRecyclerView = findViewById(R.id.order_item_list_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -133,9 +138,22 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
     public void onSubmit(View view) {
         if (!validate())
             return;
-        SalesOrderList.add(salesOrderModel);
-        setResult(RESULT_OK);
-        finish();;
+
+        final HttpRequest httpRequest = new HttpRequest(getCollectionSubmitURL(), HttpRequest.POST);
+        httpRequest.addParam("user_id", "1");
+        httpRequest.addParam("data", salesOrderModel.toJson());
+        new HttpCaller(this, "Submitting") {
+            @Override
+            public void onResponse(HttpResponse response) {
+                if (response.getStatus() == HttpResponse.ERROR)
+                    showSnackbar(response.getMesssage());
+                else {
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            }
+        }.execute(httpRequest);
+
     }
 
     private void showSnackbar(String messsage) {

@@ -1,6 +1,7 @@
 package com.ara.sunflowerorder.models;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,11 +10,18 @@ import java.util.List;
 import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class Invoice {
+    @SerializedName("invoice_entry_id")
     private int id;
+    @SerializedName("invoice_entry_no")
+    private String no;
+    @SerializedName("invoice_entry_date")
     private String date;
     private Customer customer;
+    @SerializedName("invoice_entry_total_amount")
     private double invoiceAmount;
+    @SerializedName("col_amt")
     private double paidAmount;
+    @SerializedName("balance_amount")
     private double balanceAmount;
     private double collectedAmount;
     private double pendingAmount;
@@ -24,6 +32,14 @@ public class Invoice {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String id) {
+        this.no = id;
     }
 
     public String getDate() {
@@ -96,12 +112,12 @@ public class Invoice {
         return gson.toJson(this);
     }
 
-    public static Brand fromJSON(String result) {
+    public static Invoice fromJSON(String result) {
         if (result == null || result.isEmpty()) {
-            return new Brand(-1, "");
+            return new Invoice();
         }
         Gson gson = new Gson();
-        Brand brand = gson.fromJson(result, Brand.class);
-        return brand;
+        Invoice invoice = gson.fromJson(result, Invoice.class);
+        return invoice;
     }
 }

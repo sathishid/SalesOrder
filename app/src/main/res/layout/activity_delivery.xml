@@ -73,7 +73,6 @@
 
 
     <LinearLayout
-        android:id="@+id/layout_delivery_list_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/delivery_layout_amount_submit_btn"
@@ -96,7 +95,6 @@
         android:layout_alignParentBottom="true">
 
         <TextView
-            android:id="@+id/tv_delivery_remarks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

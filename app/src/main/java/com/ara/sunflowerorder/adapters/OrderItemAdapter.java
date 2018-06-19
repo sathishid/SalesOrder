@@ -66,10 +66,10 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mProductNameView = (TextView) view.findViewById(R.id.fg_tv_product_name);
-            mBrandNameView = (TextView) view.findViewById(R.id.fg_tv_brand_name);
-            mPriceView = (TextView) view.findViewById(R.id.fg_tv_price);
-            mQuantityView = (TextView) view.findViewById(R.id.fg_tv_qty);
+            mProductNameView = view.findViewById(R.id.fg_tv_product_name);
+            mBrandNameView = view.findViewById(R.id.fg_tv_brand_name);
+            mPriceView = view.findViewById(R.id.fg_tv_price);
+            mQuantityView = view.findViewById(R.id.fg_tv_qty);
         }
 
         @Override

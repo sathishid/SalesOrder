@@ -1,7 +1,11 @@
 package com.ara.sunflowerorder.models;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class SalesOrder {
     private int id;
@@ -81,5 +85,10 @@ public class SalesOrder {
 
     public void addItem(OrderItem item) {
         getItems().add(item);
+    }
+
+    public String toJson() {
+        Gson gson=getGson();
+        return  gson.toJson(this);
     }
 }

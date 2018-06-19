@@ -60,7 +60,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
         ButterKnife.bind(this);
         getSupportActionBar().hide();
         tv_deliveryTodayDate.setText(AppConstants.dateToString(Calendar.getInstance()));
-        recyclerView = (RecyclerView) findViewById(R.id.delivery_item_list_view);
+        recyclerView = findViewById(R.id.delivery_item_list_view);
 
 
         // use this setting to improve performance if you know that changes

@@ -1,3 +1,4 @@
+
 package com.ara.sunflowerorder.utils.http;
 
 
@@ -10,6 +11,7 @@ import android.util.Log;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 import static android.app.AlertDialog.THEME_HOLO_DARK;
 import static com.ara.sunflowerorder.utils.http.HttpRequest.POST;
@@ -77,14 +79,18 @@ public class HttpCaller extends AsyncTask<HttpRequest, String, HttpResponse> {
                         .build();
             }
             Response response = client.newCall(request).execute();
-
-            String message = response.body().string();
+            ResponseBody responseBody = response.body();
+            if (responseBody == null) {
+                httpResponse.setErrorMessage("Response Body is null,Contact Support");
+                return httpResponse;
+            }
+            String message = responseBody.string();
             if (response.isSuccessful()) {
                 httpResponse.setSuccessMessage(message);
             } else {
                 httpResponse.setErrorMessage(message);
             }
-            response.body().close();
+            responseBody.close();
             return httpResponse;
 
         } catch (Exception e) {

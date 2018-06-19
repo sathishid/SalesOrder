@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.ara.sunflowerorder.models.Brand;
 import com.ara.sunflowerorder.models.Delivery;
+import com.ara.sunflowerorder.models.Product;
 import com.ara.sunflowerorder.utils.http.HttpCaller;
 import com.ara.sunflowerorder.utils.http.HttpRequest;
 import com.ara.sunflowerorder.utils.http.HttpResponse;
@@ -21,15 +22,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
+import static com.ara.sunflowerorder.utils.AppConstants.BRAND_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_APPROVE_ID_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_BRAND_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.List_PRODUCT_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.getBrandListURL;
+import static com.ara.sunflowerorder.utils.AppConstants.getProductListURL;
 
 public class ListHelperActivity extends AppCompatActivity {
 
     private int requestCode;
+    int searchId;
     @BindView(R.id.list_helper)
     ListView listView;
 
@@ -40,6 +45,8 @@ public class ListHelperActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         requestCode = intent.getIntExtra(REQUEST_CODE, -1);
+
+        searchId = intent.getIntExtra(BRAND_ID_PARAM, -1);
         fetchData();
     }
 
@@ -51,6 +58,10 @@ public class ListHelperActivity extends AppCompatActivity {
                 break;
             case LIST_BRAND_REQUEST:
                 httpRequest = new HttpRequest(getBrandListURL(), HttpRequest.GET);
+                break;
+            case List_PRODUCT_REQUEST:
+                httpRequest = new HttpRequest(getProductListURL(), HttpRequest.GET);
+                httpRequest.addParam(BRAND_ID_PARAM, searchId + "");
                 break;
         }
         return httpRequest;
@@ -95,8 +106,17 @@ public class ListHelperActivity extends AppCompatActivity {
                 );
                 listView.setAdapter(brands);
                 break;
-        }
 
+            case List_PRODUCT_REQUEST:
+                List<Product> productList = Product.fromJSONArray(json);
+                ArrayAdapter<Product> products = new ArrayAdapter<Product>(
+                        listView.getContext(),
+                        R.layout.support_simple_spinner_dropdown_item,
+                        productList
+                );
+                listView.setAdapter(products);
+                break;
+        }
     }
 
     @Override
@@ -117,6 +137,10 @@ public class ListHelperActivity extends AppCompatActivity {
             case LIST_BRAND_REQUEST:
                 Brand brand = (Brand) listView.getAdapter().getItem(position);
                 result = brand.toJson();
+                break;
+            case List_PRODUCT_REQUEST:
+                Product product = (Product) listView.getAdapter().getItem(position);
+                result = product.toJson();
                 break;
 
         }
