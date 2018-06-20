@@ -82,6 +82,12 @@ public class AppConstants {
     public static String getCollectionSubmitURL() {
         return REST_API + "collection";
     }
+    public static String getSalesOrderSubmitURL() {
+        return REST_API + "sales_order";
+    }
+    public static String getDeliverySubmitURL() {
+        return REST_API + "delivery";
+    }
 
     public static String getDeliveryReportURL() {
         return REST_API + "delivery_report";

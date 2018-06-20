@@ -37,6 +37,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.SalesOrderList;
 import static com.ara.sunflowerorder.utils.AppConstants.formatPrice;
 import static com.ara.sunflowerorder.utils.AppConstants.getCollectionSubmitURL;
+import static com.ara.sunflowerorder.utils.AppConstants.getSalesOrderSubmitURL;
 import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class SalesOrder extends AppCompatActivity implements DatePickerListener {
@@ -139,7 +140,7 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
         if (!validate())
             return;
 
-        final HttpRequest httpRequest = new HttpRequest(getCollectionSubmitURL(), HttpRequest.POST);
+        final HttpRequest httpRequest = new HttpRequest(getSalesOrderSubmitURL(), HttpRequest.POST);
         httpRequest.addParam("user_id", "1");
         httpRequest.addParam("data", salesOrderModel.toJson());
         new HttpCaller(this, "Submitting") {

@@ -14,6 +14,9 @@ import com.ara.sunflowerorder.models.Customer;
 import com.ara.sunflowerorder.models.Delivery;
 import com.ara.sunflowerorder.models.DeliveryItem;
 import com.ara.sunflowerorder.utils.AppConstants;
+import com.ara.sunflowerorder.utils.http.HttpCaller;
+import com.ara.sunflowerorder.utils.http.HttpRequest;
+import com.ara.sunflowerorder.utils.http.HttpResponse;
 
 import java.util.Calendar;
 import java.util.List;
@@ -30,6 +33,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_ITEM_INDE
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_APPROVE_ID_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.getSalesOrderSubmitURL;
 import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class DeliveryActivity extends AppCompatActivity implements ListViewClickListener {
@@ -175,5 +179,44 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
             total += item.getAccept();
         }
         tv_totalQty.setText(total + "");
+    }
+
+    @OnClick(R.id.submit_delivery)
+    public void submitDelivery(View view) {
+        if (!validate()) {
+
+            return;
+        }
+
+        final HttpRequest httpRequest = new HttpRequest(getSalesOrderSubmitURL(), HttpRequest.POST);
+        httpRequest.addParam("user_id", "1");
+        httpRequest.addParam("data", deliveryModel.toJson());
+        new HttpCaller(this, "Submitting") {
+            @Override
+            public void onResponse(HttpResponse response) {
+                if (response.getStatus() == HttpResponse.ERROR)
+                    showSnackbar(tv_approveId, response.getMesssage());
+                else {
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            }
+        }.execute(httpRequest);
+
+
+    }
+
+    private boolean validate() {
+        boolean isValid = true;
+        if (deliveryModel.getDeliveryItems().size() == 0) {
+            showSnackbar(tv_approveId, "Add one or more item.");
+            return false;
+        }
+        if (deliveryModel.getCustomer() == null) {
+            showSnackbar(tv_approveId, "Select a Customer Name.");
+
+            return false;
+        }
+        return true;
     }
 }
