@@ -52,11 +52,9 @@ public class SearchHelper extends AppCompatActivity {
         String search = atvSearch.getText().toString();
         switch (requestCode) {
             case SEARCH_CUSTOMER_REQUEST:
-                httpRequest = new HttpRequest(getCustomerListURL(), HttpRequest.GET);
-                httpRequest.addParam(CUSTOMER_NAME_PARAM, search);
-                break;
             case SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST:
                 httpRequest = new HttpRequest(getCustomerListURL(), HttpRequest.GET);
+                httpRequest.addParam(CUSTOMER_NAME_PARAM, search);
                 break;
         }
         return httpRequest;

@@ -2,6 +2,9 @@ package com.ara.sunflowerorder.models;
 
 import com.google.gson.Gson;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class DeliveryItem {
@@ -68,11 +71,15 @@ public class DeliveryItem {
     }
 
     public static DeliveryItem fromJSON(String result) {
-        if (result == null || result.isEmpty()) {
-            return new DeliveryItem();
-        }
-        Gson gson = new Gson();
+
+        Gson gson = getGson();
         DeliveryItem deliveryItem = gson.fromJson(result, DeliveryItem.class);
         return deliveryItem;
+    }
+
+    public static List<DeliveryItem> fromJSONArray(String messsage) {
+        Gson gson = getGson();
+        DeliveryItem[] deliveryItems = gson.fromJson(messsage, DeliveryItem[].class);
+        return Arrays.asList(deliveryItems);
     }
 }

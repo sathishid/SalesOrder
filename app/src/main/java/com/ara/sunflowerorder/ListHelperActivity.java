@@ -9,8 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.ara.sunflowerorder.models.Approval;
 import com.ara.sunflowerorder.models.Brand;
-import com.ara.sunflowerorder.models.Delivery;
 import com.ara.sunflowerorder.models.Product;
 import com.ara.sunflowerorder.utils.http.HttpCaller;
 import com.ara.sunflowerorder.utils.http.HttpRequest;
@@ -23,11 +23,13 @@ import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
 import static com.ara.sunflowerorder.utils.AppConstants.BRAND_ID_PARAM;
+import static com.ara.sunflowerorder.utils.AppConstants.CUSTOMER_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_APPROVE_ID_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_BRAND_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.List_PRODUCT_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
+import static com.ara.sunflowerorder.utils.AppConstants.getApproveListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getBrandListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getProductListURL;
 
@@ -54,7 +56,9 @@ public class ListHelperActivity extends AppCompatActivity {
         HttpRequest httpRequest = null;
         switch (requestCode) {
             case LIST_APPROVE_ID_REQUEST:
-                httpRequest = new HttpRequest(getBrandListURL(), HttpRequest.GET);
+
+                httpRequest = new HttpRequest((getApproveListURL()), HttpRequest.GET);
+                httpRequest.addParam(CUSTOMER_ID_PARAM, searchId + "");
                 break;
             case LIST_BRAND_REQUEST:
                 httpRequest = new HttpRequest(getBrandListURL(), HttpRequest.GET);
@@ -89,13 +93,13 @@ public class ListHelperActivity extends AppCompatActivity {
     private void setListView(String json) {
         switch (requestCode) {
             case LIST_APPROVE_ID_REQUEST:
-                List<Delivery> deliveryListList = Delivery.fromJSONArray(json);
-                ArrayAdapter<Delivery> deliveryArrayAdapter = new ArrayAdapter<Delivery>(
+                List<Approval> approvalList = Approval.fromJSONArray(json);
+                ArrayAdapter<Approval> approvalArrayAdapter = new ArrayAdapter<Approval>(
                         listView.getContext(),
                         R.layout.support_simple_spinner_dropdown_item,
-                        deliveryListList
+                        approvalList
                 );
-                listView.setAdapter(deliveryArrayAdapter);
+                listView.setAdapter(approvalArrayAdapter);
                 break;
             case LIST_BRAND_REQUEST:
                 List<Brand> brandList = Brand.fromJSONArray(json);
@@ -131,8 +135,8 @@ public class ListHelperActivity extends AppCompatActivity {
         String result = null;
         switch (requestCode) {
             case LIST_APPROVE_ID_REQUEST:
-                Delivery delivery = (Delivery) listView.getAdapter().getItem(position);
-                result = delivery.toJson();
+                Approval approval = (Approval) listView.getAdapter().getItem(position);
+                result = approval.toJson();
                 break;
             case LIST_BRAND_REQUEST:
                 Brand brand = (Brand) listView.getAdapter().getItem(position);

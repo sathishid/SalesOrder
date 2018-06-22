@@ -60,6 +60,7 @@ public class AppConstants {
     public static final String FROM_DATE_PARAM = "from_date";
     public static final String TO_DATE_PARAM = "to_date";
     public static final String USER_ID_PARAM = "user_id";
+    public static final String ENTRY_ID_PARAM="so_entry_id";
 
     public static final String ADD_ITEM_RESULT = "AddAnItemResult";
 
@@ -69,6 +70,14 @@ public class AppConstants {
 
     public static String getBrandListURL() {
         return REST_API + "brand";
+    }
+
+    public static String getApproveListURL() {
+        return REST_API + "so_approvel_list";
+    }
+
+    public static String getApprovedProducts() {
+        return REST_API + "so_approvel_product";
     }
 
     public static String getProductListURL() {
@@ -82,9 +91,11 @@ public class AppConstants {
     public static String getCollectionSubmitURL() {
         return REST_API + "collection";
     }
+
     public static String getSalesOrderSubmitURL() {
         return REST_API + "sales_order";
     }
+
     public static String getDeliverySubmitURL() {
         return REST_API + "delivery";
     }

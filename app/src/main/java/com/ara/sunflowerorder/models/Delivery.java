@@ -3,6 +3,7 @@ package com.ara.sunflowerorder.models;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.ara.sunflowerorder.utils.AppConstants.getGson;
@@ -78,24 +79,9 @@ public class Delivery {
     }
 
     public static List<Delivery> fromJSONArray(String json) {
-        ArrayList<Delivery> deliveries = new ArrayList<>(3);
-
-
-        Approval approval = Approval.fromJSONArray(null).get(0);
-        Delivery delivery = new Delivery(0, null, "02-03-2018", approval, "Remarks");
-        Product product = Product.fromJSONArray(null).get(0);
-
-
-        DeliveryItem deliveryItem = new DeliveryItem(1, product, 5, 4, 1);
-        product = Product.fromJSONArray(null).get(1);
-        delivery.getDeliveryItems().add(deliveryItem);
-        deliveryItem = new DeliveryItem(1, product, 6, 3, 3);
-
-        delivery.getDeliveryItems().add(deliveryItem);
-
-        deliveries.add(delivery);
-
-        return deliveries;
+        Gson gson = getGson();
+        Delivery[] deliveries = gson.fromJson(json, Delivery[].class);
+        return Arrays.asList(deliveries);
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.ara.sunflowerorder.adapters.DeliveryItemAdapter;
 import com.ara.sunflowerorder.listeners.ListViewClickListener;
+import com.ara.sunflowerorder.models.Approval;
 import com.ara.sunflowerorder.models.Customer;
 import com.ara.sunflowerorder.models.Delivery;
 import com.ara.sunflowerorder.models.DeliveryItem;
@@ -26,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.ara.sunflowerorder.utils.AppConstants.DELIVERY_ITEM_EDIT_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.ENTRY_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_CUSTOMER;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_DELIVERY_ITEM;
@@ -33,6 +35,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_ITEM_INDE
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_APPROVE_ID_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.getApprovedProducts;
 import static com.ara.sunflowerorder.utils.AppConstants.getSalesOrderSubmitURL;
 import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
@@ -56,6 +59,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
     @BindView(R.id.delivery_total_qty)
     TextView tv_totalQty;
 
+    DeliveryActivity thisActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,8 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
         //If list is empty then recycler view will throw exception. So need to hide if empty.
         recyclerView.setVisibility(View.GONE);
 
-
+        //Used in the inner classes like HttpCaller
+        thisActivity = this;
     }
 
     @OnClick(R.id.tv_delivery_customer)
@@ -123,18 +128,31 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
 
                 break;
             case LIST_APPROVE_ID_REQUEST:
-                deliveryModel = Delivery.fromJSON(json);
+                Approval approval = Approval.fromJSON(json);
                 deliveryModel.setCustomer(customer);
                 tv_approveId.setText(deliveryModel.getApproval().getId() + "");
                 tv_deliveryDate.setText(deliveryModel.getApproval().getDate());
 
-                updateAcceptQuantities();
-                List<DeliveryItem> items = deliveryModel.getDeliveryItems();
+                HttpRequest httpRequest = new HttpRequest(getApprovedProducts(), HttpRequest.GET);
+                httpRequest.addParam(ENTRY_ID_PARAM, approval.getId() + "");
+                new HttpCaller(this, "Loading Products") {
+                    @Override
+                    public void onResponse(HttpResponse response) {
+                        if (response.getStatus() == HttpResponse.ERROR) {
+                            showSnackbar(tv_approveId, response.getMesssage());
+                        } else {
+                            List<DeliveryItem> deliveryItemList = DeliveryItem.fromJSONArray(response.getMesssage());
+                            deliveryModel.setDeliveryItems(deliveryItemList);
+                            updateAcceptQuantities();
+                            mAdapter = new DeliveryItemAdapter(deliveryModel.getDeliveryItems(), thisActivity);
+                            recyclerView.setAdapter(mAdapter);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            updateTotal();
+                        }
+                    }
+                }.execute(httpRequest);
 
-                mAdapter = new DeliveryItemAdapter(deliveryModel.getDeliveryItems(), this);
-                recyclerView.setAdapter(mAdapter);
-                recyclerView.setVisibility(View.VISIBLE);
-                updateTotal();
+
                 break;
             case DELIVERY_ITEM_EDIT_REQUEST:
                 int position = data.getIntExtra(EXTRA_SELECTED_ITEM_INDEX, -1);
