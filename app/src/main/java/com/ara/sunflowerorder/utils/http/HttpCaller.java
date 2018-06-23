@@ -48,6 +48,7 @@ public class HttpCaller extends AsyncTask<HttpRequest, String, HttpResponse> {
         progressDialog = new ProgressDialog(context,
                 THEME_HOLO_DARK);
         progressDialog.setIndeterminate(true);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setMessage(progressMessage);
         progressDialog.show();
     }

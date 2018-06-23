@@ -11,6 +11,8 @@
         android:id="@+id/layout_del_rpt_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:padding="5dp"
         android:orientation="horizontal">
 
         <TextView
@@ -18,6 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginRight="5dp"
+            android:background="@color/deep_purple"
+            android:drawableTint="@color/colorPrimaryDark"
             android:clickable="true"
             android:drawableRight="@drawable/ic_date"
             android:text="@string/date_format" />
@@ -25,7 +31,11 @@
         <TextView
             android:id="@+id/tv_del_to_date"
             android:layout_width="match_parent"
+            android:layout_marginLeft="5dp"
+            android:drawableTint="@color/colorPrimaryDark"
             android:layout_height="wrap_content"
+            android:background="@color/deep_purple"
+            android:gravity="center"
             android:layout_weight="1"
             android:clickable="true"
             android:drawableRight="@drawable/ic_date"
@@ -37,11 +47,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/layout_del_rpt_filter">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/del_rpt_list_view"
             android:layout_width="match_parent"
+            android:padding="5dp"
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
     </LinearLayout>
