@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CommentActivity"
-    android:layout_margin="@dimen/item_spacing">
+    android:background="@drawable/background"
+    android:padding="@dimen/item_spacing">
 
     <EditText
         android:layout_width="match_parent"

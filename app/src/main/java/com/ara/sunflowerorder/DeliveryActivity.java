@@ -14,6 +14,7 @@ import com.ara.sunflowerorder.models.Approval;
 import com.ara.sunflowerorder.models.Customer;
 import com.ara.sunflowerorder.models.Delivery;
 import com.ara.sunflowerorder.models.DeliveryItem;
+import com.ara.sunflowerorder.models.Product;
 import com.ara.sunflowerorder.utils.AppConstants;
 import com.ara.sunflowerorder.utils.http.HttpCaller;
 import com.ara.sunflowerorder.utils.http.HttpRequest;
@@ -26,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
 import static com.ara.sunflowerorder.utils.AppConstants.DELIVERY_ITEM_EDIT_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.ENTRY_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
@@ -69,7 +71,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
         getSupportActionBar().hide();
         tv_deliveryTodayDate.setText(AppConstants.dateToString(Calendar.getInstance()));
         recyclerView = findViewById(R.id.delivery_item_list_view);
-
+        deliveryModel = new Delivery();
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -130,6 +132,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
             case LIST_APPROVE_ID_REQUEST:
                 Approval approval = Approval.fromJSON(json);
                 deliveryModel.setCustomer(customer);
+                deliveryModel.setApproval(approval);
                 tv_approveId.setText(deliveryModel.getApproval().getId() + "");
                 tv_deliveryDate.setText(deliveryModel.getApproval().getDate());
 
@@ -143,7 +146,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
                         } else {
                             List<DeliveryItem> deliveryItemList = DeliveryItem.fromJSONArray(response.getMesssage());
                             deliveryModel.setDeliveryItems(deliveryItemList);
-                            updateAcceptQuantities();
+                            updateOM();
                             mAdapter = new DeliveryItemAdapter(deliveryModel.getDeliveryItems(), thisActivity);
                             recyclerView.setAdapter(mAdapter);
                             recyclerView.setVisibility(View.VISIBLE);
@@ -182,12 +185,16 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
         mAdapter.notifyItemChanged(position);
     }
 
-    private void updateAcceptQuantities() {
+    private void updateOM() {
         List<DeliveryItem> items = deliveryModel.getDeliveryItems();
         for (int i = 0; i < items.size(); i++) {
             DeliveryItem item = items.get(i);
             item.setAccept(item.getQuantity());
             item.setReject(0);
+            Product product = new Product();
+            product.setName(item.getProductName());
+            product.setCode(item.getProductCode());
+            item.setProduct(product);
         }
     }
 
@@ -207,7 +214,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
         }
 
         final HttpRequest httpRequest = new HttpRequest(getSalesOrderSubmitURL(), HttpRequest.POST);
-        httpRequest.addParam("user_id", "1");
+        //httpRequest.addParam("user_id", CurrentUser.getUserId()+"");
         httpRequest.addParam("data", deliveryModel.toJson());
         new HttpCaller(this, "Submitting") {
             @Override

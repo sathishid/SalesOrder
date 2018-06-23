@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +18,7 @@ import butterknife.OnClick;
 import static com.ara.sunflowerorder.utils.AppConstants.ADD_COLLECTION_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.ADD_DELIVERY_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.ADD_SALES_ORDER_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.LOGIN_REQUEST;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,10 +29,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-        //setSupportActionBar(toolbar);
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, LOGIN_REQUEST);
 
 
     }
@@ -72,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case ADD_COLLECTION_REQUEST:
                 AppConstants.showSnackbar(linearyLayout, "Collection made Successfully");
+                break;
+            case LOGIN_REQUEST:
+                //Do it if need to do after login.
                 break;
         }
     }

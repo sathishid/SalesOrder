@@ -6,7 +6,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 import com.ara.sunflowerorder.models.SalesOrder;
-import com.ara.sunflowerorder.models.UOM;
+import com.ara.sunflowerorder.models.User;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -19,13 +19,7 @@ public class AppConstants {
     public static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
     public static final ArrayList<SalesOrder> SalesOrderList = new ArrayList<>();
 
-    public static final UOM[] UOM_ARRAY = {
-            new UOM(1, "Gram"),
-            new UOM(2, "Liter"),
-            new UOM(3, "KG"),
-            new UOM(4, "Piece"),
-            new UOM(5, "Hours")
-    };
+
     public static final int SEARCH_CUSTOMER_REQUEST = 101;
     public static final int LIST_BRAND_REQUEST = 102;
     public static final int List_PRODUCT_REQUEST = 103;
@@ -38,6 +32,7 @@ public class AppConstants {
     public static final int DELIVERY_ITEM_EDIT_REQUEST = 109;
     public static final int ADD_COLLECTION_REQUEST = 110;
     public static final int INVOICE_ITEM_EDIT_REQUEST = 111;
+    public static final int LOGIN_REQUEST=112;
 
     public static final String EXTRA_SEARCH_RESULT = "SearchResult";
     public static final String EXTRA_SELECTED_CUSTOMER = "selectedCustomer";
@@ -60,9 +55,14 @@ public class AppConstants {
     public static final String FROM_DATE_PARAM = "from_date";
     public static final String TO_DATE_PARAM = "to_date";
     public static final String USER_ID_PARAM = "user_id";
-    public static final String ENTRY_ID_PARAM="so_entry_id";
+    public static final String PASSWORD_PARAM="password";
+    public static final String ENTRY_ID_PARAM = "so_entry_id";
+    public static User CurrentUser=null;
 
-    public static final String ADD_ITEM_RESULT = "AddAnItemResult";
+
+    public static String getUserLoginURL() {
+        return REST_API + "login";
+    }
 
     public static String getCustomerListURL() {
         return REST_API + "customer";

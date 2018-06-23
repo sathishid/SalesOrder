@@ -44,12 +44,7 @@ public class DeliveryReportAdapter extends RecyclerView.Adapter<DeliveryReportAd
         holder.mRejected.setText(formatQuantity(deliveryReport.getReject()));
         holder.mAccepted.setText(formatQuantity(deliveryReport.getAccept()));
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClickListner.onItemClick(mValues.get(position), position);
-            }
-        });
+
     }
 
     @Override

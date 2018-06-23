@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/item_spacing"
+
     android:background="@drawable/list_item_background"
     android:orientation="vertical">
 

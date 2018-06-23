@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/icon_button"
+    android:background="@drawable/background"
+    android:padding="@dimen/icon_button"
     tools:context=".OrderItem">
 
     <android.support.constraint.ConstraintLayout

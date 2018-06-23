@@ -1,6 +1,7 @@
 package com.ara.sunflowerorder.models;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,8 +9,15 @@ import java.util.List;
 import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class DeliveryItem {
+    @SerializedName("so_entry_product_details_id")
     private int id;
+
+    @SerializedName("product_name")
+    private String productName;
+    @SerializedName("product_code")
+    private String productCode;
     private Product product;
+    @SerializedName("so_entry_product_details_qty")
     private int quantity;
     private int accept;
     private int reject;
@@ -17,12 +25,20 @@ public class DeliveryItem {
     public DeliveryItem() {
     }
 
-    public DeliveryItem(int id, Product product, int quantity, int accept, int reject) {
-        this.id = id;
-        this.product = product;
-        this.quantity = quantity;
-        this.accept = accept;
-        this.reject = reject;
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
     public int getId() {
