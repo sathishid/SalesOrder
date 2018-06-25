@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_item_background"
+    android:background="@color/deep_purple"
     android:orientation="horizontal"
     android:layout_marginTop="@dimen/icon_button"
+    android:layout_margin="@dimen/item_spacing"
     android:padding="@dimen/item_spacing">
 
     <LinearLayout
@@ -15,12 +16,15 @@
         <TextView
             android:id="@+id/fg_tv_product_name"
             android:layout_width="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_height="wrap_content"
             android:text="@string/product_name" />
 
         <TextView
+            android:layout_marginTop="5dp"
             android:id="@+id/fg_tv_brand_name"
             android:layout_width="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_height="wrap_content"
             android:text="@string/brand_name" />
 
@@ -36,14 +40,17 @@
             android:id="@+id/fg_tv_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_gravity="right"
             android:gravity="right"
             android:text="@string/price" />
 
         <TextView
+            android:layout_marginTop="5dp"
             android:id="@+id/fg_tv_qty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_gravity="right"
             android:gravity="right"
             android:text="@string/order_quantity" />

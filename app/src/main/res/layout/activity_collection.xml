@@ -3,46 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/item_spacing"
     android:background="@drawable/background"
+    android:padding="@dimen/item_spacing"
     tools:context=".CollectionActivity">
 
     <TextView
         android:id="@+id/tv_coll_customer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="fill"
-        android:padding="5dp"
-        android:textStyle="bold"
-        android:drawableTint="@color/colorPrimaryDark"
         android:background="@color/deep_purple"
         android:clickable="true"
         android:drawableRight="@drawable/ic_right_arrow"
-        android:text="@string/select_customer" />
+        android:drawableTint="@color/colorPrimaryDark"
+        android:gravity="fill"
+        android:padding="5dp"
+        android:text="@string/select_customer"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_coll_date"
         android:layout_width="match_parent"
-        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_coll_customer"
         android:layout_marginTop="@dimen/item_spacing"
-        android:clickable="true"
         android:background="@color/deep_purple"
-        android:padding="5dp"
-        android:drawableTint="@color/colorPrimaryDark"
+        android:clickable="true"
         android:drawableRight="@drawable/ic_date"
+        android:drawableTint="@color/colorPrimaryDark"
         android:gravity="left|center"
-        android:hint="@string/order_date" />
+        android:hint="@string/order_date"
+        android:padding="5dp"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
 
 
     <Spinner
         android:id="@+id/spinner_coll_payment_mode"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@drawable/spinnerback"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_below="@+id/tv_coll_date"
         android:layout_marginTop="@dimen/item_spacing"
+        android:background="@drawable/spinnerback"
         android:entries="@array/payment_mode"></Spinner>
 
 
@@ -57,8 +61,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/coll_item_list_view"
             android:layout_width="match_parent"
-            android:padding="5dp"
             android:layout_height="match_parent"
+            android:padding="5dp"
             android:scrollbars="vertical" />
     </LinearLayout>
 

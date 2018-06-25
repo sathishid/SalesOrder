@@ -19,8 +19,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:background="@color/deep_purple"
             android:gravity="fill"
             android:layout_weight="1"
+            android:padding="5dp"
+            android:textColor="@color/colorPrimaryDark"
             android:drawableTint="@color/colorPrimaryDark"
             android:drawableRight="@drawable/ic_date"
             android:text="@string/date_format" />
@@ -28,8 +31,11 @@
         <TextView
             android:id="@+id/tv_coll_to_date"
             android:layout_weight="1"
+            android:padding="5dp"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
+            android:background="@color/deep_purple"
+            android:textColor="@color/colorPrimaryDark"
             android:gravity="fill"
             android:layout_height="wrap_content"
             android:drawableTint="@color/colorPrimaryDark"

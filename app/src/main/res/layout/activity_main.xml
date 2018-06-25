@@ -27,6 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
+                app:cardBackgroundColor="@color/deep_purple"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:onClick="sales_order_onClick"
@@ -42,6 +43,7 @@
                     <ImageView
                         android:layout_width="54dp"
                         android:layout_height="54dp"
+                        android:backgroundTint="@color/purple"
                         android:background="@drawable/circlepurple"
                         android:padding="12dp"
                         android:src="@drawable/ic_sales_order" />
@@ -50,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sales_order"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/white"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -61,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
+                app:cardBackgroundColor="@color/deep_purple"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
@@ -76,6 +79,7 @@
 
                     <ImageView
                         android:layout_width="54dp"
+                        android:backgroundTint="@color/purple"
                         android:layout_height="54dp"
                         android:background="@drawable/circlepurple"
                         android:padding="12dp"
@@ -85,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/delivery"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/white"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -97,6 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_margin="15dp"
+            app:cardBackgroundColor="@color/deep_purple"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="5dp"
@@ -111,6 +116,7 @@
                 <ImageView
                     android:layout_width="54dp"
                     android:layout_height="54dp"
+                    android:backgroundTint="@color/purple"
                     android:background="@drawable/circlepurple"
                     android:padding="12dp"
                     android:src="@drawable/ic_collection" />
@@ -119,7 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/collection"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
             </LinearLayout>
 
