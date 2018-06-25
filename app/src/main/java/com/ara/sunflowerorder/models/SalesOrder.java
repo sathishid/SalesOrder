@@ -9,6 +9,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class SalesOrder {
     private int id;
+    private User userId;
     private Customer customer;
     private String orderDate;
     private String deliveryDate;
@@ -16,6 +17,14 @@ public class SalesOrder {
     private List<OrderItem> items;
     private String remarks;
     private double total;
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
 
     public int getId() {
         return id;

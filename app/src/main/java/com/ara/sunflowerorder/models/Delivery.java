@@ -10,6 +10,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class Delivery {
     private int id;
+    private User user;
     private Customer customer;
     private String deliveryDate;
     private Approval approval;
@@ -19,13 +20,12 @@ public class Delivery {
     public Delivery() {
     }
 
-    public Delivery(int id, Customer customer, String deliveryDate,
-                    Approval approval, String remarks) {
-        this.id = id;
-        this.customer = customer;
-        this.deliveryDate = deliveryDate;
-        this.approval = approval;
-        this.remarks = remarks;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getId() {

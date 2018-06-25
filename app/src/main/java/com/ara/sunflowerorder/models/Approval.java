@@ -49,7 +49,7 @@ public class Approval {
 
     @Override
     public String toString() {
-        return "App No:"+approveNo + "\t\tApp Date:" + date;
+        return "App No:"+id + "\t\tApp Date:" + date;
     }
 
     public String toJson() {

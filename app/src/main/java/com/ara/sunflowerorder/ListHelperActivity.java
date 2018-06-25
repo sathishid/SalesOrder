@@ -24,11 +24,14 @@ import butterknife.OnItemClick;
 
 import static com.ara.sunflowerorder.utils.AppConstants.BRAND_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.CUSTOMER_ID_PARAM;
+import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
+import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_CUSTOMER;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_APPROVE_ID_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_BRAND_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.List_PRODUCT_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
+import static com.ara.sunflowerorder.utils.AppConstants.USER_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.getApproveListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getBrandListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getProductListURL;
@@ -37,6 +40,7 @@ public class ListHelperActivity extends AppCompatActivity {
 
     private int requestCode;
     int searchId;
+    int selectedCustomerId;
     @BindView(R.id.list_helper)
     ListView listView;
 
@@ -47,7 +51,7 @@ public class ListHelperActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         requestCode = intent.getIntExtra(REQUEST_CODE, -1);
-
+        selectedCustomerId = intent.getIntExtra(EXTRA_SELECTED_CUSTOMER, -1);
         searchId = intent.getIntExtra(BRAND_ID_PARAM, -1);
         fetchData();
     }
@@ -58,7 +62,8 @@ public class ListHelperActivity extends AppCompatActivity {
             case LIST_APPROVE_ID_REQUEST:
 
                 httpRequest = new HttpRequest((getApproveListURL()), HttpRequest.GET);
-                httpRequest.addParam(CUSTOMER_ID_PARAM, searchId + "");
+
+                httpRequest.addParam(CUSTOMER_ID_PARAM, selectedCustomerId + "");
                 break;
             case LIST_BRAND_REQUEST:
                 httpRequest = new HttpRequest(getBrandListURL(), HttpRequest.GET);

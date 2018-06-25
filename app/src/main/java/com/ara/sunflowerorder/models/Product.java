@@ -15,7 +15,7 @@ public class Product {
     private String name;
     private int availableQty;
     @SerializedName("product_rate")
-    private double price;
+    private double rate;
     private Brand brand;
     @SerializedName("uom_name")
     private String uom;
@@ -29,7 +29,7 @@ public class Product {
         this.id = id;
         this.name = name;
         this.availableQty = availableQty;
-        this.price = price;
+        this.rate = price;
         this.brand = brand;
         this.uom = uom;
         this.code = code;
@@ -60,11 +60,11 @@ public class Product {
     }
 
     public double getPrice() {
-        return price;
+        return rate;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.rate = price;
     }
 
     public Brand getBrand() {

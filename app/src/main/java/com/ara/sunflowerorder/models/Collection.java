@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-import okhttp3.FormBody;
 import okhttp3.RequestBody;
 
 import static com.ara.sunflowerorder.utils.AppConstants.JSON_MEDIA_TYPE;
@@ -12,12 +11,20 @@ import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class Collection {
     private int id;
+    private User user;
     private Customer customer;
     private String paymentMode;
     private String date;
     private List<Invoice> invoiceList;
     private double totalAmount;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getDate() {
         return date;

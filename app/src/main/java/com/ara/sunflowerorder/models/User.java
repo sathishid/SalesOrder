@@ -15,6 +15,16 @@ public class User {
     private String userId;
     @SerializedName("username")
     private String userName;
+    @SerializedName("branch_id")
+    private String branchId;
+
+    public String getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(String branchId) {
+        this.branchId = branchId;
+    }
 
     public int getId() {
         return id;
@@ -50,9 +60,12 @@ public class User {
         try {
             JSONArray jsonArray = new JSONArray(message);
             User user = new User();
-            JSONObject reader=jsonArray.getJSONObject(0);
+            JSONObject reader = jsonArray.getJSONObject(0);
+
             user.id = Integer.parseInt(reader.getString("userid"));
+            user.branchId = reader.getString("branch_id");
             user.userName = reader.getString("username");
+
             return user;
         } catch (JSONException jsonException) {
             return null;

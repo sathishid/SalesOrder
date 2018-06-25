@@ -214,7 +214,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
         }
 
         final HttpRequest httpRequest = new HttpRequest(getSalesOrderSubmitURL(), HttpRequest.POST);
-        //httpRequest.addParam("user_id", CurrentUser.getUserId()+"");
+        deliveryModel.setUser(CurrentUser);
         httpRequest.addParam("data", deliveryModel.toJson());
         new HttpCaller(this, "Submitting") {
             @Override

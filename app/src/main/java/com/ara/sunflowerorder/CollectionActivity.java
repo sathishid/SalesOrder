@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_INVOICE_ITEM;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_ITEM_INDEX;
@@ -152,7 +153,9 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
     public void onSubmit() {
 
         final HttpRequest httpRequest = new HttpRequest(getCollectionSubmitURL(), HttpRequest.POST);
-        httpRequest.addParam("user_id", "1");
+        collection.setUser(CurrentUser);
+
+        collection.setDate(tvTodayDate.getText().toString());
         httpRequest.addParam("data", collection.toJson());
         new HttpCaller(this, "Submitting") {
             @Override

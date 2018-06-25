@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.ara.sunflowerorder.utils.AppConstants;
 
@@ -58,16 +59,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.i("NO RESULT", "RESULT is NOT OK, ensure everything is going fine");
             return;
         }
-        View linearyLayout = findViewById(R.id.layout_linear_main);
+        RelativeLayout relativeLayout = findViewById(R.id.layout_rel_main);
         switch (requestCode) {
             case ADD_SALES_ORDER_REQUEST:
-                Snackbar.make(linearyLayout, "Sales Order Submitted Successfully", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(relativeLayout, "Sales Order Submitted Successfully", Snackbar.LENGTH_LONG).show();
                 break;
             case ADD_DELIVERY_REQUEST:
-                Snackbar.make(linearyLayout, "Delivery Info Submitted Successfully", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(relativeLayout, "Delivery Info Submitted Successfully", Snackbar.LENGTH_LONG).show();
                 break;
             case ADD_COLLECTION_REQUEST:
-                AppConstants.showSnackbar(linearyLayout, "Collection made Successfully");
+                AppConstants.showSnackbar(relativeLayout, "Collection made Successfully");
                 break;
             case LOGIN_REQUEST:
                 //Do it if need to do after login.

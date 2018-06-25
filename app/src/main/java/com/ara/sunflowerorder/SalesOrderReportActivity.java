@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
 import static com.ara.sunflowerorder.utils.AppConstants.DATE_PICKER_FROM_TAG;
 import static com.ara.sunflowerorder.utils.AppConstants.DATE_PICKER_TO_TAG;
 import static com.ara.sunflowerorder.utils.AppConstants.FROM_DATE_PARAM;
@@ -94,7 +95,7 @@ public class SalesOrderReportActivity extends AppCompatActivity implements DateP
 //                return;}
 
             HttpRequest httpRequest = new HttpRequest(getSalesOrderReportURL(), HttpRequest.POST);
-            httpRequest.addParam(USER_ID_PARAM, "1");
+            httpRequest.addParam(USER_ID_PARAM, CurrentUser.getId()+"");
             String strFromDate = fromDate.getText().toString();
             String strToDate = toDate.getText().toString();
             strFromDate = strFromDate.replace('-', '/');

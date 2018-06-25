@@ -28,17 +28,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.ara.sunflowerorder.utils.AppConstants.ADD_ITEM_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
 import static com.ara.sunflowerorder.utils.AppConstants.DATE_PICKER_DELIVERY_TAG;
 import static com.ara.sunflowerorder.utils.AppConstants.DATE_PICKER_ORDER_TAG;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_ADD_ITEM;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
-import static com.ara.sunflowerorder.utils.AppConstants.SalesOrderList;
 import static com.ara.sunflowerorder.utils.AppConstants.formatPrice;
-import static com.ara.sunflowerorder.utils.AppConstants.getCollectionSubmitURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getSalesOrderSubmitURL;
-import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class SalesOrder extends AppCompatActivity implements DatePickerListener {
     private RecyclerView mRecyclerView;
@@ -113,7 +111,7 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
                     total += item.getPrice() * item.getQuantity();
                     salesOrderModel.setTotal(total);
                     total_amount_tv.setText(formatPrice(total));
-                    mAdapter.notifyItemChanged(salesOrderModel.getItems().size() - 1);
+                    mAdapter.notifyItemInserted(salesOrderModel.getItems().size() - 1);
                     if (salesOrderModel.getItems().size() == 1)
                         mRecyclerView.setVisibility(View.VISIBLE);
 
@@ -139,9 +137,10 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
     public void onSubmit(View view) {
         if (!validate())
             return;
-
+        salesOrderModel.setOrderDate(order_date_tv.getText().toString());
+        salesOrderModel.setDeliveryDate(delivery_date_tv.getText().toString());
         final HttpRequest httpRequest = new HttpRequest(getSalesOrderSubmitURL(), HttpRequest.POST);
-        httpRequest.addParam("user_id", "1");
+        salesOrderModel.setUserId(CurrentUser);
         httpRequest.addParam("data", salesOrderModel.toJson());
         new HttpCaller(this, "Submitting") {
             @Override

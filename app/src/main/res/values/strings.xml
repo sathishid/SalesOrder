@@ -42,7 +42,7 @@
     <string name="payment_mode">Payment Mode</string>
     <string-array name="payment_mode">
         <item>Cash</item>
-        <item>Bank</item>
+        <item>Credit</item>
     </string-array>
     <string name="title_activity_login">Sign in</string>
 

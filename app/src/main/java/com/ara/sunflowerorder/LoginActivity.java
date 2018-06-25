@@ -113,7 +113,10 @@ public class LoginActivity extends AppCompatActivity {
                         showSnackbar(mLoginFormView, response.getMesssage());
                     } else {
                         String message = response.getMesssage();
-                        if (message.contains("fail")) {
+                        if(message.isEmpty()){
+                            showSnackbar(mLoginFormView, "Server not Responding...");
+                        }
+                        else if ( message.contains("fail")) {
                             showSnackbar(mLoginFormView, "Login Failed..");
                         } else {
                             AppConstants.CurrentUser = User.fromJson(message);
