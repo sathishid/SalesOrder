@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="10dp"
     android:layout_margin="@dimen/item_spacing"
-    android:background="@drawable/list_item_background"
+    android:background="@color/deep_purple"
     android:orientation="vertical">
 
     <LinearLayout
+        android:weightSum="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -15,6 +17,7 @@
             android:id="@+id/coll_item_inv_no"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_weight="1"
             android:text="@string/invoice_no"
             android:textStyle="bold" />
@@ -23,6 +26,7 @@
             android:id="@+id/coll_item_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_weight="1"
             android:gravity="right"
             android:text="@string/date_format"
@@ -31,6 +35,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:weightSum="4"
+        android:layout_marginTop="5dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -39,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/colorPrimaryDark"
 
             android:text="@string/invoice_amout" />
 
@@ -48,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/colorPrimaryDark"
 
             android:text="@string/cash_format" />
 
@@ -55,6 +63,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_weight="1"
 
             android:text="Bal Amt" />
@@ -64,6 +73,7 @@
             android:id="@+id/coll_item_bal_amt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_weight="1"
 
             android:gravity="right"
@@ -73,10 +83,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:weightSum="4"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="match_parent"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
@@ -86,6 +99,7 @@
             android:id="@+id/coll_item_coll_amt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_weight="1"
 
 
@@ -95,6 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/colorPrimaryDark"
 
             android:text="@string/pending" />
 
@@ -103,6 +118,7 @@
             android:id="@+id/coll_item_pending_amt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_weight="1"
 
             android:gravity="right"

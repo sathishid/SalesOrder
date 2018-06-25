@@ -10,6 +10,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_height="match_parent">
 
         <TextView
@@ -17,6 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="7dp"
+            android:background="@color/deep_purple"
             android:text="@string/product_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -26,7 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
+            android:background="@color/deep_purple"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_weight="0.25"
+            android:padding="7dp"
             android:text="@string/product_code"
             app:layout_constraintTop_toBottomOf="@+id/tv_delivery_product_name" />
 
@@ -35,14 +42,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
+            android:padding="7dp"
+            android:background="@color/deep_purple"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/tv_delivery_product_code">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_weight="1"
+                android:textColor="@color/colorPrimaryDark"
                 android:text="@string/ordered_quantity" />
 
             <TextView
@@ -51,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/colorPrimaryDark"
                 android:gravity="right"
                 android:paddingRight="@dimen/item_spacing"
                 android:text="1" />
@@ -62,6 +72,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
             android:hint="@string/accept_qty"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/deep_purple"
             android:inputType="number"
             app:layout_constraintTop_toBottomOf="@id/layout_avail_qty" />
 
@@ -70,7 +82,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
+            android:textColor="@color/white"
             android:hint="@string/rejected_quantity"
+            android:backgroundTint="@color/deep_purple"
             android:inputType="number"
             app:layout_constraintTop_toBottomOf="@id/edit_accepted_qty" />
 
@@ -80,6 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
+            android:drawableTint="@color/white"
             android:drawableRight="@drawable/ic_add"
             android:text="@string/add_item"
             app:layout_constraintTop_toBottomOf="@id/edit_rejected_qty" />

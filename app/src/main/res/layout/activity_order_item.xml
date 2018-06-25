@@ -16,10 +16,14 @@
             android:id="@+id/tv_order_brandName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="@dimen/item_spacing"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@color/deep_purple"
             android:clickable="true"
             android:drawableRight="@drawable/ic_right_arrow"
+            android:gravity="fill"
+            android:padding="5dp"
             android:text="@string/brand_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,8 +34,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
+            android:textColor="@color/colorPrimaryDark"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:background="@color/deep_purple"
             android:clickable="true"
             android:drawableRight="@drawable/ic_right_arrow"
+            android:padding="5dp"
             android:text="@string/product_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +49,9 @@
             android:id="@+id/tv_order_product_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/deep_purple"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_marginTop="@dimen/item_spacing"
             android:layout_weight="0.25"
             android:text="@string/product_code"
@@ -51,17 +62,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
+            android:padding="9dp"
+            android:background="@color/deep_purple"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/tv_order_product_code">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_weight="1.25"
                 android:text="UOM" />
 
             <TextView
                 android:id="@+id/tv_order_uom"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -71,6 +86,8 @@
         <LinearLayout
             android:id="@+id/layout_avail_qty"
             android:layout_width="match_parent"
+            android:padding="9dp"
+            android:background="@color/deep_purple"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
             android:orientation="horizontal"
@@ -79,6 +96,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
 
                 android:layout_weight="1"
                 android:text="@string/available_quantity" />
@@ -89,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/colorPrimaryDark"
                 android:gravity="right"
                 android:paddingRight="@dimen/item_spacing"
                 android:text="1" />
@@ -99,6 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_spacing"
+            android:backgroundTint="@color/deep_purple"
             android:hint="@string/order_quantity"
             android:inputType="number"
             app:layout_constraintTop_toBottomOf="@id/layout_avail_qty" />
@@ -107,6 +127,8 @@
             android:id="@+id/edit_order_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/deep_purple"
+            android:textColor="@color/white"
             android:layout_marginTop="@dimen/item_spacing"
             android:hint="@string/price"
             android:inputType="numberDecimal"
@@ -125,6 +147,7 @@
             android:id="@+id/btn_order_an_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableTint="@color/white"
             android:drawableRight="@drawable/ic_add"
             android:text="@string/add_item"
             app:layout_constraintTop_toBottomOf="@id/tv_order_total_amount" />
