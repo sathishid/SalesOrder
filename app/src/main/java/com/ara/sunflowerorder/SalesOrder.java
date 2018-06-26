@@ -1,9 +1,9 @@
 package com.ara.sunflowerorder;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +14,6 @@ import com.ara.sunflowerorder.adapters.OrderItemAdapter;
 import com.ara.sunflowerorder.models.Customer;
 import com.ara.sunflowerorder.models.OrderItem;
 import com.ara.sunflowerorder.utils.AppConstants;
-import com.ara.sunflowerorder.utils.DatePickerFragment;
-import com.ara.sunflowerorder.utils.DatePickerListener;
 import com.ara.sunflowerorder.utils.http.HttpCaller;
 import com.ara.sunflowerorder.utils.http.HttpRequest;
 import com.ara.sunflowerorder.utils.http.HttpResponse;
@@ -29,16 +27,18 @@ import butterknife.OnClick;
 
 import static com.ara.sunflowerorder.utils.AppConstants.ADD_ITEM_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
-import static com.ara.sunflowerorder.utils.AppConstants.DATE_PICKER_DELIVERY_TAG;
-import static com.ara.sunflowerorder.utils.AppConstants.DATE_PICKER_ORDER_TAG;
+import static com.ara.sunflowerorder.utils.AppConstants.DELIVERY_DATE_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_ADD_ITEM;
+import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_DATE_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
+import static com.ara.sunflowerorder.utils.AppConstants.ORDER_DATE_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.formatPrice;
 import static com.ara.sunflowerorder.utils.AppConstants.getSalesOrderSubmitURL;
+import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
 
-public class SalesOrder extends AppCompatActivity implements DatePickerListener {
+public class SalesOrder extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -54,7 +54,7 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
     TextView total_amount_tv;
 
 
-    DialogFragment newFragment;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +93,11 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String json = null;
         switch (requestCode) {
             case SEARCH_CUSTOMER_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    String json = data.getStringExtra(EXTRA_SEARCH_RESULT);
+                    json = data.getStringExtra(EXTRA_SEARCH_RESULT);
                     Customer customer = Customer.fromJSON(json);
                     customer_tv.setText(customer.getName());
                     salesOrderModel.setCustomer(customer);
@@ -104,7 +105,7 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
                 break;
             case ADD_ITEM_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    String json = data.getStringExtra(EXTRA_ADD_ITEM);
+                    json = data.getStringExtra(EXTRA_ADD_ITEM);
                     OrderItem item = OrderItem.fromJson(json);
                     salesOrderModel.addItem(item);
                     double total = salesOrderModel.getTotal();
@@ -117,6 +118,20 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
 
                 }
                 break;
+            case DELIVERY_DATE_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    json = data.getStringExtra(EXTRA_DATE_RESULT);
+                    salesOrderModel.setDeliveryDate(json);
+                    delivery_date_tv.setText(json);
+                }
+                break;
+            case ORDER_DATE_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    json = data.getStringExtra(EXTRA_DATE_RESULT);
+                    salesOrderModel.setOrderDate(json);
+                    order_date_tv.setText(json);
+                }
+                break;
 
         }
 
@@ -124,12 +139,11 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
 
     @OnClick({R.id.order_date_edit, R.id.delivery_date_edit})
     public void dateClicked(View view) {
+        Intent intent = new Intent(this, CalendarActivity.class);
         if (view.getId() == R.id.order_date_edit) {
-            newFragment = new DatePickerFragment();
-            newFragment.show(getSupportFragmentManager(), DATE_PICKER_ORDER_TAG);
+            startActivityForResult(intent, ORDER_DATE_REQUEST);
         } else {
-            newFragment = new DatePickerFragment();
-            newFragment.show(getSupportFragmentManager(), DATE_PICKER_DELIVERY_TAG);
+            startActivityForResult(intent, DELIVERY_DATE_REQUEST);
         }
     }
 
@@ -142,9 +156,11 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
         final HttpRequest httpRequest = new HttpRequest(getSalesOrderSubmitURL(), HttpRequest.POST);
         salesOrderModel.setUserId(CurrentUser);
         httpRequest.addParam("data", salesOrderModel.toJson());
-        new HttpCaller(this, "Submitting") {
+        progressDialog = showProgressBar(this, "Submitting");
+        new HttpCaller() {
             @Override
             public void onResponse(HttpResponse response) {
+                progressDialog.dismiss();
                 if (response.getStatus() == HttpResponse.ERROR)
                     showSnackbar(response.getMesssage());
                 else {
@@ -179,14 +195,4 @@ public class SalesOrder extends AppCompatActivity implements DatePickerListener 
         startActivityForResult(addItemIntent, ADD_ITEM_REQUEST);
     }
 
-
-    @Override
-    public void updateDate(Calendar date) {
-        if (newFragment.getTag().equals(DATE_PICKER_ORDER_TAG)) {
-            order_date_tv.setText(DatePickerFragment.dateToString(date));
-        } else {
-            delivery_date_tv.setText(DatePickerFragment.dateToString(date));
-        }
-
-    }
 }

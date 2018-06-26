@@ -61,7 +61,7 @@ public class InvoceItemActivity extends AppCompatActivity {
         String collectedAmount = edCollectionAmount.getText().toString();
         double dblCollAmt = Double.parseDouble(collectedAmount);
         if (dblCollAmt < 0 || dblCollAmt > invoice.getBalanceAmount()) {
-            showSnackbar(tvPaidAmount, "Update proper collection amount");
+            showSnackbar(tvPaidAmount, "Collection Amount must be lesser than Balance Amount (Inv-paid)");
             return;
         }
         invoice.setCollectedAmount(dblCollAmt);
@@ -75,5 +75,6 @@ public class InvoceItemActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         setResult(RESULT_CANCELED);
+        finish();
     }
 }

@@ -45,7 +45,7 @@
         <TextView
             android:padding="3dp"
             android:layout_marginLeft="5dp"
-            android:id="@+id/delivery_today_date"
+            android:id="@+id/delivery_order_date"
             android:layout_width="match_parent"
             android:textColor="@color/colorPrimaryDark"
             android:layout_height="wrap_content"
@@ -135,6 +135,7 @@
             android:gravity="center"
             android:background="@color/deep_purple"
             android:clickable="true"
+            android:visibility="gone"
             android:drawableRight="@drawable/ic_right_arrow"
             android:text="@string/remarks" />
 

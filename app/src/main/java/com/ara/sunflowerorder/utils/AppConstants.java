@@ -1,10 +1,13 @@
 package com.ara.sunflowerorder.utils;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import com.ara.sunflowerorder.R;
 import com.ara.sunflowerorder.models.SalesOrder;
 import com.ara.sunflowerorder.models.User;
 import com.google.gson.Gson;
@@ -32,7 +35,11 @@ public class AppConstants {
     public static final int DELIVERY_ITEM_EDIT_REQUEST = 109;
     public static final int ADD_COLLECTION_REQUEST = 110;
     public static final int INVOICE_ITEM_EDIT_REQUEST = 111;
-    public static final int LOGIN_REQUEST=112;
+    public static final int LOGIN_REQUEST = 112;
+    public static final int ORDER_DATE_REQUEST = 113;
+    public static final int DELIVERY_DATE_REQUEST = 114;
+    public static final int FROM_DATE_REQUEST = 115;
+    public static final int TO_DATE_REQUEST = 116;
 
     public static final String EXTRA_SEARCH_RESULT = "SearchResult";
     public static final String EXTRA_SELECTED_CUSTOMER = "selectedCustomer";
@@ -41,6 +48,7 @@ public class AppConstants {
     public static final String EXTRA_SELECTED_DELIVERY_ITEM = "selecteDeliveryItem";
     public static final String EXTRA_SELECTED_ITEM_INDEX = "SelectedIndex";
     public static final String EXTRA_SELECTED_INVOICE_ITEM = "Invoice Item";
+    public static final String EXTRA_DATE_RESULT = "dateResult";
 
 
     public static final String DATE_PICKER_ORDER_TAG = "Pick a Order Date";
@@ -55,9 +63,9 @@ public class AppConstants {
     public static final String FROM_DATE_PARAM = "from_date";
     public static final String TO_DATE_PARAM = "to_date";
     public static final String USER_ID_PARAM = "user_id";
-    public static final String PASSWORD_PARAM="password";
+    public static final String PASSWORD_PARAM = "password";
     public static final String ENTRY_ID_PARAM = "so_entry_id";
-    public static User CurrentUser=null;
+    public static User CurrentUser = null;
 
 
     public static String getUserLoginURL() {
@@ -97,7 +105,7 @@ public class AppConstants {
     }
 
     public static String getDeliverySubmitURL() {
-        return REST_API + "delivery";
+        return REST_API + "Delivery";
     }
 
     public static String getDeliveryReportURL() {
@@ -141,5 +149,15 @@ public class AppConstants {
 
     public static String formatQuantity(int qty) {
         return String.format("%d", qty).trim();
+    }
+
+    public static ProgressDialog showProgressBar(Context context, String progressMessage) {
+        ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(context, R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMessage(progressMessage);
+        progressDialog.show();
+        return progressDialog;
     }
 }

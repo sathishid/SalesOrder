@@ -2,6 +2,7 @@ package com.ara.sunflowerorder.models.view;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -83,6 +84,9 @@ public class CollectionReport {
     }
 
     public static List<CollectionReport> fromJsonArray(String messsage) {
+        if (messsage == null) {
+            return new ArrayList<>();
+        }
         Gson gson = getGson();
         CollectionReport[] collectionReports = gson.fromJson(messsage, CollectionReport[].class);
         return Arrays.asList(collectionReports);

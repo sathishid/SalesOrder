@@ -1,5 +1,6 @@
 package com.ara.sunflowerorder;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import com.ara.sunflowerorder.utils.http.HttpResponse;
 import static com.ara.sunflowerorder.utils.AppConstants.PASSWORD_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.USER_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.getUserLoginURL;
+import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
 import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 /**
@@ -33,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,17 +110,18 @@ public class LoginActivity extends AppCompatActivity {
             HttpRequest httpRequest = new HttpRequest(getUserLoginURL(), HttpRequest.POST);
             httpRequest.addParam(USER_ID_PARAM, mUserIdView.getText().toString());
             httpRequest.addParam(PASSWORD_PARAM, mPasswordView.getText().toString());
-            new HttpCaller(this, "Validating User..") {
+            progressDialog = showProgressBar(this, "Validating User..");
+            new HttpCaller() {
                 @Override
                 public void onResponse(HttpResponse response) {
+                    progressDialog.dismiss();
                     if (response.getStatus() == HttpResponse.ERROR) {
                         showSnackbar(mLoginFormView, response.getMesssage());
                     } else {
                         String message = response.getMesssage();
-                        if(message.isEmpty()){
+                        if (message.isEmpty()) {
                             showSnackbar(mLoginFormView, "Server not Responding...");
-                        }
-                        else if ( message.contains("fail")) {
+                        } else if (message.contains("fail")) {
                             showSnackbar(mLoginFormView, "Login Failed..");
                         } else {
                             AppConstants.CurrentUser = User.fromJson(message);

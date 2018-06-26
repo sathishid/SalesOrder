@@ -1,5 +1,6 @@
 package com.ara.sunflowerorder;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +39,8 @@ import static com.ara.sunflowerorder.utils.AppConstants.LIST_APPROVE_ID_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.getApprovedProducts;
-import static com.ara.sunflowerorder.utils.AppConstants.getSalesOrderSubmitURL;
+import static com.ara.sunflowerorder.utils.AppConstants.getDeliverySubmitURL;
+import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
 import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class DeliveryActivity extends AppCompatActivity implements ListViewClickListener {
@@ -50,18 +52,26 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
 
     @BindView(R.id.tv_delivery_customer)
     TextView tv_customer;
-    @BindView(R.id.delivery_delivery_date)
+
+    @BindView(R.id.delivery_order_date)
     TextView tv_deliveryDate;
-    @BindView(R.id.delivery_today_date)
+
+    @BindView(R.id.delivery_delivery_date)
     TextView tv_deliveryTodayDate;
+
+
     @BindView(R.id.tv_delivery_approve_id)
     TextView tv_approveId;
+
     @BindView(R.id.delivery_item_list_view)
     RecyclerView recyclerView;
+
     @BindView(R.id.delivery_total_qty)
     TextView tv_totalQty;
 
     DeliveryActivity thisActivity;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,12 +145,13 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
                 deliveryModel.setApproval(approval);
                 tv_approveId.setText(deliveryModel.getApproval().getId() + "");
                 tv_deliveryDate.setText(deliveryModel.getApproval().getDate());
-
+                progressDialog = showProgressBar(this, "Loading Products");
                 HttpRequest httpRequest = new HttpRequest(getApprovedProducts(), HttpRequest.GET);
                 httpRequest.addParam(ENTRY_ID_PARAM, approval.getId() + "");
-                new HttpCaller(this, "Loading Products") {
+                new HttpCaller() {
                     @Override
                     public void onResponse(HttpResponse response) {
+
                         if (response.getStatus() == HttpResponse.ERROR) {
                             showSnackbar(tv_approveId, response.getMesssage());
                         } else {
@@ -152,6 +163,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
                             recyclerView.setVisibility(View.VISIBLE);
                             updateTotal();
                         }
+                        progressDialog.dismiss();
                     }
                 }.execute(httpRequest);
 
@@ -213,12 +225,15 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
             return;
         }
 
-        final HttpRequest httpRequest = new HttpRequest(getSalesOrderSubmitURL(), HttpRequest.POST);
+        final HttpRequest httpRequest = new HttpRequest(getDeliverySubmitURL(), HttpRequest.POST);
         deliveryModel.setUser(CurrentUser);
+        deliveryModel.setDeliveryDate(tv_deliveryTodayDate.getText().toString());
         httpRequest.addParam("data", deliveryModel.toJson());
-        new HttpCaller(this, "Submitting") {
+        progressDialog = showProgressBar(this, "Submitting..");
+        new HttpCaller() {
             @Override
             public void onResponse(HttpResponse response) {
+                progressDialog.dismiss();
                 if (response.getStatus() == HttpResponse.ERROR)
                     showSnackbar(tv_approveId, response.getMesssage());
                 else {

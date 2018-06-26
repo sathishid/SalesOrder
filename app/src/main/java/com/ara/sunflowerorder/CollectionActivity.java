@@ -1,5 +1,6 @@
 package com.ara.sunflowerorder;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.formatPrice;
 import static com.ara.sunflowerorder.utils.AppConstants.getCollectionSubmitURL;
+import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
 import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class CollectionActivity extends AppCompatActivity implements ListViewClickListener {
@@ -55,6 +57,8 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
     Spinner spinnerPaymentMode;
     @BindView(R.id.coll_item_list_view)
     RecyclerView recyclerView;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +103,8 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
 
                     HttpRequest httpRequest = new HttpRequest(AppConstants.getInvoiceListURL(), HttpRequest.GET);
                     httpRequest.addParam(AppConstants.CUSTOMER_ID_PARAM, customer.getId() + "");
-                    new HttpCaller(this, "Loading Invoices") {
+                    progressDialog = showProgressBar(this, "Loading Invoices..");
+                    new HttpCaller() {
                         @Override
                         public void onResponse(HttpResponse response) {
                             if (response.getStatus() == HttpResponse.ERROR) {
@@ -112,6 +117,7 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
                                 recyclerView.setAdapter(mAdapter);
                                 recyclerView.setVisibility(View.VISIBLE);
                             }
+                            progressDialog.dismiss();
                         }
                     }.execute(httpRequest);
 
@@ -157,7 +163,8 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
 
         collection.setDate(tvTodayDate.getText().toString());
         httpRequest.addParam("data", collection.toJson());
-        new HttpCaller(this, "Submitting") {
+        progressDialog = showProgressBar(this, "Submitting..");
+        new HttpCaller() {
             @Override
             public void onResponse(HttpResponse response) {
                 if (response.getStatus() == HttpResponse.ERROR)
@@ -165,6 +172,7 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
                 else {
                     showSnackbar(tvCustomer, response.getMesssage());
                 }
+                progressDialog.dismiss();
             }
         }.execute(httpRequest);
     }

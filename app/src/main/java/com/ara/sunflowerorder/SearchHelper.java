@@ -1,5 +1,6 @@
 package com.ara.sunflowerorder;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.getCustomerListURL;
+import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
 import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class SearchHelper extends AppCompatActivity {
@@ -38,6 +40,8 @@ public class SearchHelper extends AppCompatActivity {
     ListView listViewItems;
     @BindView(R.id.atv_helper_search)
     AutoCompleteTextView atvSearch;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +78,11 @@ public class SearchHelper extends AppCompatActivity {
                     Snackbar.LENGTH_INDEFINITE).show();
             return;
         }
-        new HttpCaller(this, "Loading data..") {
+        progressDialog = showProgressBar(this, "Loading data..");
+        new HttpCaller() {
             @Override
             public void onResponse(HttpResponse response) {
+                progressDialog.dismiss();
                 if (response.getStatus() == HttpResponse.ERROR) {
                     Snackbar.make(listViewItems, response.getMesssage(), Snackbar.LENGTH_LONG).show();
                 } else {

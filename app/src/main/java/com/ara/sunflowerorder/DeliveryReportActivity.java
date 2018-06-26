@@ -1,7 +1,8 @@
 package com.ara.sunflowerorder;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +12,6 @@ import android.widget.TextView;
 
 import com.ara.sunflowerorder.adapters.DeliveryReportAdapter;
 import com.ara.sunflowerorder.models.view.DeliveryReport;
-import com.ara.sunflowerorder.utils.DatePickerFragment;
-import com.ara.sunflowerorder.utils.DatePickerListener;
 import com.ara.sunflowerorder.utils.http.HttpCaller;
 import com.ara.sunflowerorder.utils.http.HttpRequest;
 import com.ara.sunflowerorder.utils.http.HttpResponse;
@@ -25,14 +24,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
-import static com.ara.sunflowerorder.utils.AppConstants.DATE_PICKER_FROM_TAG;
-import static com.ara.sunflowerorder.utils.AppConstants.DATE_PICKER_TO_TAG;
+import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_DATE_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.FROM_DATE_PARAM;
+import static com.ara.sunflowerorder.utils.AppConstants.FROM_DATE_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.TO_DATE_PARAM;
+import static com.ara.sunflowerorder.utils.AppConstants.TO_DATE_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.USER_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.getDeliveryReportURL;
+import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
 
-public class DeliveryReportActivity extends AppCompatActivity implements DatePickerListener {
+public class DeliveryReportActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -42,7 +43,8 @@ public class DeliveryReportActivity extends AppCompatActivity implements DatePic
     TextView fromDate;
     @BindView(R.id.tv_del_to_date)
     TextView toDate;
-    DialogFragment newFragment;
+
+    ProgressDialog progressDialog;
 
     Calendar from;
     Calendar to;
@@ -70,54 +72,58 @@ public class DeliveryReportActivity extends AppCompatActivity implements DatePic
 
     @OnClick({R.id.tv_del_to_date, R.id.tv_del_from_date})
     public void chooseDate(View view) {
+        Intent intent = new Intent(this, CalendarActivity.class);
         int id = view.getId();
         switch (id) {
             case R.id.tv_del_from_date:
-                newFragment = new DatePickerFragment();
-                newFragment.show(getSupportFragmentManager(), DATE_PICKER_FROM_TAG);
+                startActivityForResult(intent, FROM_DATE_REQUEST);
                 break;
             case R.id.tv_del_to_date:
-                newFragment = new DatePickerFragment();
-                newFragment.show(getSupportFragmentManager(), DATE_PICKER_TO_TAG);
+                startActivityForResult(intent, TO_DATE_REQUEST);
                 break;
         }
     }
 
     @Override
-    public void updateDate(Calendar date) {
-        if (newFragment.getTag().equals(DATE_PICKER_FROM_TAG)) {
-            from = date;
-            fromDate.setText(DatePickerFragment.dateToString(date));
-        } else {
-            to = date;
-            toDate.setText(DatePickerFragment.dateToString(date));
-//            if (from.before(to)) {
-//                return;}
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        String date = data.getStringExtra(EXTRA_DATE_RESULT);
+        switch (requestCode) {
+            case FROM_DATE_REQUEST:
 
-            HttpRequest httpRequest = new HttpRequest(getDeliveryReportURL(), HttpRequest.POST);
-            httpRequest.addParam(USER_ID_PARAM, CurrentUser.getId()+"");
-            String strFromDate = fromDate.getText().toString();
-            String strToDate = toDate.getText().toString();
-            strFromDate = strFromDate.replace('-', '/');
-            strToDate = strToDate.replace('-', '/');
-            httpRequest.addParam(FROM_DATE_PARAM, strFromDate);
-            httpRequest.addParam(TO_DATE_PARAM, strToDate);
-            new HttpCaller(this, "Delivery Report..") {
-                @Override
-                public void onResponse(HttpResponse response) {
-                    if (response.getStatus() == HttpResponse.ERROR) {
-                        Log.i("DeliveryReport", "Fetching error");
-                    } else {
-                        List<DeliveryReport> deliveryReportList = DeliveryReport.fromJsonArray(response.getMesssage());
-                        mAdapter = new DeliveryReportAdapter(deliveryReportList, null);
-                        recyclerView.setAdapter(mAdapter);
-                        recyclerView.setVisibility(View.VISIBLE);
+                fromDate.setText(date);
+                break;
+            case TO_DATE_REQUEST:
+
+                toDate.setText(date);
+                HttpRequest httpRequest = new HttpRequest(getDeliveryReportURL(), HttpRequest.POST);
+                httpRequest.addParam(USER_ID_PARAM, CurrentUser.getId() + "");
+                String strFromDate = fromDate.getText().toString();
+                String strToDate = toDate.getText().toString();
+                strFromDate = strFromDate.replace('-', '/');
+                strToDate = strToDate.replace('-', '/');
+                httpRequest.addParam(FROM_DATE_PARAM, strFromDate);
+                httpRequest.addParam(TO_DATE_PARAM, strToDate);
+                progressDialog = showProgressBar(this, "Delivery Report..");
+                new HttpCaller() {
+                    @Override
+                    public void onResponse(HttpResponse response) {
+                        progressDialog.dismiss();
+                        if (response.getStatus() == HttpResponse.ERROR) {
+                            Log.i("DeliveryReport", "Fetching error");
+                        } else {
+                            List<DeliveryReport> deliveryReportList = DeliveryReport.fromJsonArray(response.getMesssage());
+                            mAdapter = new DeliveryReportAdapter(deliveryReportList, null);
+                            recyclerView.setAdapter(mAdapter);
+                            recyclerView.setVisibility(View.VISIBLE);
+
+                        }
 
                     }
-                }
-            }.execute(httpRequest);
-
+                }.execute(httpRequest);
         }
-
     }
+
 }

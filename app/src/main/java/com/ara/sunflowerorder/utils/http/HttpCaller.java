@@ -27,42 +27,23 @@ public class HttpCaller extends AsyncTask<HttpRequest, String, HttpResponse> {
 
 
     private static final String UTF_8 = "UTF-8";
-    private Context context;
-    private ProgressDialog progressDialog;
-    private String progressMessage;
 
-    public HttpCaller(Context context, String progressMessage) {
+    public HttpCaller() {
         super();
-        this.context = context;
-        this.progressMessage = progressMessage;
-
     }
 
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        return cm.getActiveNetworkInfo() != null;
-    }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(context, R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setMessage(progressMessage);
-        progressDialog.show();
+
     }
 
     @Override
     protected HttpResponse doInBackground(HttpRequest... httpRequests) {
         HttpResponse httpResponse = new HttpResponse();
-        if (!isNetworkConnected()) {
-            httpResponse = new HttpResponse();
-            httpResponse.setErrorMessage("No Network Connection Available, please " +
-                    "check Network is Enabled or not?");
-            return httpResponse;
-        }
+
         HttpRequest httpRequest = httpRequests[0];
 
         OkHttpClient client = new OkHttpClient();
@@ -96,7 +77,7 @@ public class HttpCaller extends AsyncTask<HttpRequest, String, HttpResponse> {
             return httpResponse;
 
         } catch (Exception e) {
-            progressDialog.dismiss();
+
             Log.e("Http URL", e.toString());
             httpResponse.setErrorMessage(e.getMessage());
         }
@@ -108,8 +89,7 @@ public class HttpCaller extends AsyncTask<HttpRequest, String, HttpResponse> {
     protected void onPostExecute(HttpResponse response) {
 
         super.onPostExecute(response);
-        progressDialog.dismiss();
-        context = null;
+
         onResponse(response);
     }
 

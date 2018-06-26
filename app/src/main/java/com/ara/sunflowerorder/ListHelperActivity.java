@@ -1,5 +1,6 @@
 package com.ara.sunflowerorder;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -24,17 +25,16 @@ import butterknife.OnItemClick;
 
 import static com.ara.sunflowerorder.utils.AppConstants.BRAND_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.CUSTOMER_ID_PARAM;
-import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_CUSTOMER;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_APPROVE_ID_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_BRAND_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.List_PRODUCT_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
-import static com.ara.sunflowerorder.utils.AppConstants.USER_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.getApproveListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getBrandListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getProductListURL;
+import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
 
 public class ListHelperActivity extends AppCompatActivity {
 
@@ -43,6 +43,8 @@ public class ListHelperActivity extends AppCompatActivity {
     int selectedCustomerId;
     @BindView(R.id.list_helper)
     ListView listView;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +85,11 @@ public class ListHelperActivity extends AppCompatActivity {
                     Snackbar.LENGTH_INDEFINITE).show();
             return;
         }
-        new HttpCaller(this, "Loading data..") {
+        progressDialog = showProgressBar(this, "Loading data..");
+        new HttpCaller() {
             @Override
             public void onResponse(HttpResponse response) {
+                progressDialog.dismiss();
                 if (response.getStatus() == HttpResponse.ERROR) {
                     Snackbar.make(listView, response.getMesssage(), Snackbar.LENGTH_LONG).show();
                 } else {
