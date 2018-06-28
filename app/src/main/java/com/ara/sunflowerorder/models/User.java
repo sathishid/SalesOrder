@@ -56,7 +56,7 @@ public class User {
     }
 
     public static User fromJson(String message) {
-        Gson gson = getGson();
+
         try {
             JSONArray jsonArray = new JSONArray(message);
             User user = new User();

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -143,7 +144,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
                 Approval approval = Approval.fromJSON(json);
                 deliveryModel.setCustomer(customer);
                 deliveryModel.setApproval(approval);
-                tv_approveId.setText(deliveryModel.getApproval().getId() + "");
+                tv_approveId.setText(deliveryModel.getApproval().getApproveNo()+ "");
                 tv_deliveryDate.setText(deliveryModel.getApproval().getDate());
                 progressDialog = showProgressBar(this, "Loading Products");
                 HttpRequest httpRequest = new HttpRequest(getApprovedProducts(), HttpRequest.GET);
@@ -203,10 +204,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
             DeliveryItem item = items.get(i);
             item.setAccept(item.getQuantity());
             item.setReject(0);
-            Product product = new Product();
-            product.setName(item.getProductName());
-            product.setCode(item.getProductCode());
-            item.setProduct(product);
+
         }
     }
 
@@ -228,7 +226,9 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
         final HttpRequest httpRequest = new HttpRequest(getDeliverySubmitURL(), HttpRequest.POST);
         deliveryModel.setUser(CurrentUser);
         deliveryModel.setDeliveryDate(tv_deliveryTodayDate.getText().toString());
+
         httpRequest.addParam("data", deliveryModel.toJson());
+        Log.i("Delivery Submit",deliveryModel.toJson());
         progressDialog = showProgressBar(this, "Submitting..");
         new HttpCaller() {
             @Override

@@ -11,12 +11,13 @@ import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 public class DeliveryItem {
     @SerializedName("so_entry_product_details_id")
     private int id;
-
+    @SerializedName("product_id")
+    private int productId;
     @SerializedName("product_name")
     private String productName;
     @SerializedName("product_code")
     private String productCode;
-    private Product product;
+
     @SerializedName("so_entry_product_details_qty")
     private int quantity;
     private int accept;
@@ -49,13 +50,7 @@ public class DeliveryItem {
         this.id = id;
     }
 
-    public Product getProduct() {
-        return product;
-    }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
     public int getQuantity() {
         return quantity;

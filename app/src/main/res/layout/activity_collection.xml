@@ -48,6 +48,7 @@
         android:background="@drawable/spinnerback"
         android:dropDownSelector="@drawable/spinner_item_selector"
         android:entries="@array/payment_mode"
+        android:popupBackground="@color/dull_blue"
         android:textColor="@color/colorPrimaryDark"></Spinner>
 
 

@@ -7,7 +7,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ara.sunflowerorder.adapters.OrderItemAdapter;
@@ -52,6 +54,8 @@ public class SalesOrder extends AppCompatActivity {
     TextView delivery_date_tv;
     @BindView(R.id.sales_order_total_amount)
     TextView total_amount_tv;
+    @BindView(R.id.sp_order_payment_mode)
+    Spinner spinnerPaymentMode;
 
 
     ProgressDialog progressDialog;
@@ -151,11 +155,13 @@ public class SalesOrder extends AppCompatActivity {
     public void onSubmit(View view) {
         if (!validate())
             return;
+        salesOrderModel.setPaymentMode(spinnerPaymentMode.getSelectedItem().toString());
         salesOrderModel.setOrderDate(order_date_tv.getText().toString());
         salesOrderModel.setDeliveryDate(delivery_date_tv.getText().toString());
         final HttpRequest httpRequest = new HttpRequest(getSalesOrderSubmitURL(), HttpRequest.POST);
         salesOrderModel.setUserId(CurrentUser);
         httpRequest.addParam("data", salesOrderModel.toJson());
+        Log.i("Sales Order Submit", salesOrderModel.toJson());
         progressDialog = showProgressBar(this, "Submitting");
         new HttpCaller() {
             @Override
@@ -185,6 +191,7 @@ public class SalesOrder extends AppCompatActivity {
             showSnackbar("Choose a Customer.");
             return false;
         }
+
         return true;
     }
 

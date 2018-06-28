@@ -160,4 +160,16 @@ public class AppConstants {
         progressDialog.show();
         return progressDialog;
     }
+
+    public static int parseInt(String intValue) {
+        if (intValue.isEmpty()) {
+            return 0;
+        }
+        try {
+            int value = Integer.parseInt(intValue);
+            return value;
+        } catch (NumberFormatException numberFormatException) {
+            return 0;
+        }
+    }
 }

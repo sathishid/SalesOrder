@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -157,12 +158,15 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
 
     @OnClick(R.id.btn_submit_coll)
     public void onSubmit() {
+        if (!validate())
+            return;
 
         final HttpRequest httpRequest = new HttpRequest(getCollectionSubmitURL(), HttpRequest.POST);
         collection.setUser(CurrentUser);
 
         collection.setDate(tvTodayDate.getText().toString());
         httpRequest.addParam("data", collection.toJson());
+        Log.i("Collection Submit", collection.toJson());
         progressDialog = showProgressBar(this, "Submitting..");
         new HttpCaller() {
             @Override
@@ -170,12 +174,39 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
                 if (response.getStatus() == HttpResponse.ERROR)
                     showSnackbar(tvCustomer, response.getMesssage());
                 else {
-                    showSnackbar(tvCustomer, response.getMesssage());
+                    {
+                        setResult(RESULT_OK);
+                        finish();
+                    }
                 }
                 progressDialog.dismiss();
             }
         }.execute(httpRequest);
     }
 
+    public boolean validate() {
+        boolean isValid = true;
+        List<Invoice> invoiceList = collection.getInvoiceList();
+        if (invoiceList.size() == 0) {
+            showSnackbar(tvCustomer, "No Invoice Item found to submit.");
+            return false;
+        }
+        int i = 0;
+        for (i = 0; i < invoiceList.size(); i++)
+            if (invoiceList.get(i).getCollectedAmount() > 0)
+                break;
+        if (i == invoiceList.size()) {
+            showSnackbar(tvCustomer, "Update Collection amount in any of the invoice entry");
+            return false;
+        }
+
+
+        if (collection.getCustomer() == null) {
+            showSnackbar(tvCustomer, "Please select a customer");
+        }
+
+
+        return isValid;
+    }
 
 }

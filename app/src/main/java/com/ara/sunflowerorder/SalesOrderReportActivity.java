@@ -33,6 +33,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.TO_DATE_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.USER_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.getSalesOrderReportURL;
 import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
+import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class SalesOrderReportActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
@@ -81,7 +82,7 @@ public class SalesOrderReportActivity extends AppCompatActivity {
                 startActivityForResult(intent, FROM_DATE_REQUEST);
                 break;
             case R.id.tv_so_to_date:
-                startActivityForResult(intent, FROM_DATE_REQUEST);
+                startActivityForResult(intent, TO_DATE_REQUEST);
                 break;
         }
     }
@@ -108,7 +109,7 @@ public class SalesOrderReportActivity extends AppCompatActivity {
                 strToDate = strToDate.replace('-', '/');
                 httpRequest.addParam(FROM_DATE_PARAM, strFromDate);
                 httpRequest.addParam(TO_DATE_PARAM, strToDate);
-                 progressDialog = showProgressBar(this, "Delivery Report..");
+                progressDialog = showProgressBar(this, "Delivery Report..");
                 new HttpCaller() {
                     @Override
                     public void onResponse(HttpResponse response) {
@@ -116,10 +117,15 @@ public class SalesOrderReportActivity extends AppCompatActivity {
                         if (response.getStatus() == HttpResponse.ERROR) {
                             Log.i("DeliveryReport", "Fetching error");
                         } else {
-                            List<SalesOrderReport> salesOrderReportList = SalesOrderReport.fromJsonArray(response.getMesssage());
-                            mAdapter = new SalesOrderReportAdapter(salesOrderReportList, null);
-                            recyclerView.setAdapter(mAdapter);
-                            recyclerView.setVisibility(View.VISIBLE);
+                            String strResponse = response.getMesssage();
+                            if (strResponse.isEmpty() || strResponse.equalsIgnoreCase("[]")) {
+                                showSnackbar(recyclerView, "No data found.");
+                            } else {
+                                List<SalesOrderReport> salesOrderReportList = SalesOrderReport.fromJsonArray(response.getMesssage());
+                                mAdapter = new SalesOrderReportAdapter(salesOrderReportList, null);
+                                recyclerView.setAdapter(mAdapter);
+                                recyclerView.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 }.execute(httpRequest);

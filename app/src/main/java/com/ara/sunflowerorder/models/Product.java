@@ -14,10 +14,10 @@ public class Product {
     @SerializedName("product_name")
     private String name;
     private int availableQty;
-    @SerializedName("product_rate")
+    @SerializedName("product_selling_price")
     private double rate;
     private Brand brand;
-    @SerializedName("uom_name")
+    @SerializedName("product_uom_name")
     private String uom;
     @SerializedName("product_code")
     private String code;

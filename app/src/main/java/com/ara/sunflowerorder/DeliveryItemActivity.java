@@ -44,8 +44,8 @@ public class DeliveryItemActivity extends AppCompatActivity {
         position = intent.getIntExtra(EXTRA_SELECTED_ITEM_INDEX, -1);
         deliveryItem = DeliveryItem.fromJSON(json);
 
-        tvProductName.setText(deliveryItem.getProduct().getName());
-        tvProductCode.setText(deliveryItem.getProduct().getCode());
+        tvProductName.setText(deliveryItem.getProductName());
+        tvProductCode.setText(deliveryItem.getProductCode());
         tvOrderedQty.setText(deliveryItem.getQuantity() + "");
 
     }

@@ -37,8 +37,8 @@ public class DeliveryItemAdapter extends RecyclerView.Adapter<DeliveryItemAdapte
 
         final DeliveryItem deliveryItem = mValues.get(position);
         holder.mItem = deliveryItem;
-        holder.mProductNameView.setText(deliveryItem.getProduct().getName());
-        holder.mProductCode.setText(deliveryItem.getProduct().getCode());
+        holder.mProductNameView.setText(deliveryItem.getProductName());
+        holder.mProductCode.setText(deliveryItem.getProductCode());
         holder.mOrderedQty.setText(formatQuantity(deliveryItem.getQuantity()));
         holder.mAcceptedQty.setText(formatQuantity(deliveryItem.getAccept()));
         holder.mRejectedQty.setText(formatQuantity(deliveryItem.getReject()));

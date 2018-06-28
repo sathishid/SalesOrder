@@ -18,9 +18,10 @@ import butterknife.OnClick;
 
 import static com.ara.sunflowerorder.utils.AppConstants.BRAND_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
-import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_BRAND_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.List_PRODUCT_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
+import static com.ara.sunflowerorder.utils.AppConstants.parseInt;
 
 public class OrderItem extends AppCompatActivity {
 
@@ -61,9 +62,13 @@ public class OrderItem extends AppCompatActivity {
         int id = view.getId();
         switch (id) {
             case R.id.tv_order_product_name:
+                if (brand == null) {
+                    showSnackbar("Please select Brand first");
+                    return;
+                }
                 Intent chooseProduct = new Intent(this, ListHelperActivity.class);
                 chooseProduct.putExtra(REQUEST_CODE, List_PRODUCT_REQUEST);
-                chooseProduct.putExtra(BRAND_ID_PARAM,brand.getId());
+                chooseProduct.putExtra(BRAND_ID_PARAM, brand.getId());
                 startActivityForResult(chooseProduct, List_PRODUCT_REQUEST);
                 break;
             case R.id.tv_order_brandName:
@@ -101,14 +106,15 @@ public class OrderItem extends AppCompatActivity {
 
     @OnClick(R.id.btn_order_an_item)
     public void sendItem(View view) {
+        String tempText = editOrderQty.getText().toString();
+        orderItemModel.setQuantity(parseInt(tempText));
+        tempText = editTextOrderPrice.getText().toString();
+        orderItemModel.setPrice(Double.parseDouble(tempText));
         if (!validate()) {
             return;
         }
 
-        String tempText = editOrderQty.getText().toString();
-        orderItemModel.setQuantity(Integer.parseInt(tempText));
-        tempText = editTextOrderPrice.getText().toString();
-        orderItemModel.setPrice(Double.parseDouble(tempText));
+
         String json = orderItemModel.toJson();
         Intent intent = new Intent();
         intent.putExtra(AppConstants.EXTRA_ADD_ITEM, json);
@@ -129,6 +135,25 @@ public class OrderItem extends AppCompatActivity {
             showSnackbar("Please select the product.");
             return false;
         }
+        String text = editOrderQty.getText().toString();
+        if (text.isEmpty()) {
+            showSnackbar("Please update the quantity.");
+            return false;
+        }
+        text = editTextOrderPrice.getText().toString();
+        if (text.isEmpty()) {
+            showSnackbar("Please update the price.");
+            return false;
+        }
+        if (orderItemModel.getQuantity() <= 0) {
+            showSnackbar("Quantity must be positive.");
+            return false;
+        }
+        if (orderItemModel.getPrice() <= 0) {
+            showSnackbar("Price must be positive");
+            return false;
+        }
+
         return true;
     }
 }

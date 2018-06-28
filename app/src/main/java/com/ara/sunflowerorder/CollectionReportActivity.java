@@ -33,6 +33,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.TO_DATE_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.USER_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.getCollectionReportURL;
 import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
+import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class CollectionReportActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
@@ -117,10 +118,15 @@ public class CollectionReportActivity extends AppCompatActivity {
                         if (response.getStatus() == HttpResponse.ERROR) {
                             Log.i("DeliveryReport", "Fetching error");
                         } else {
-                            List<CollectionReport> collectionReportList = CollectionReport.fromJsonArray(response.getMesssage());
-                            mAdapter = new CollectionReportAdapter(collectionReportList, null);
-                            recyclerView.setAdapter(mAdapter);
-                            recyclerView.setVisibility(View.VISIBLE);
+                            String strResponse = response.getMesssage();
+                            if (strResponse.isEmpty() || strResponse.equalsIgnoreCase("[]")) {
+                                showSnackbar(recyclerView, "No data found.");
+                            } else {
+                                List<CollectionReport> collectionReportList = CollectionReport.fromJsonArray(response.getMesssage());
+                                mAdapter = new CollectionReportAdapter(collectionReportList, null);
+                                recyclerView.setAdapter(mAdapter);
+                                recyclerView.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 }.execute(httpRequest);
