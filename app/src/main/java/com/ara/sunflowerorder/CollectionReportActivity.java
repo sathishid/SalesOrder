@@ -3,7 +3,6 @@ package com.ara.sunflowerorder;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +44,7 @@ public class CollectionReportActivity extends AppCompatActivity {
     TextView fromDate;
     @BindView(R.id.tv_coll_to_date)
     TextView toDate;
-    DialogFragment newFragment;
+
 
     Calendar from;
     Calendar to;

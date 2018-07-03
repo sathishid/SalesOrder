@@ -31,37 +31,66 @@
         android:layout_marginTop="10dp"
         android:weightSum="2">
 
-        <TextView
-            android:id="@+id/order_date_edit"
+        <LinearLayout
+            style="@style/InfoView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/deep_purple"
-            android:clickable="true"
-            android:drawableRight="@drawable/ic_date"
-            android:drawableTint="@color/colorPrimaryDark"
-            android:gravity="fill"
-            android:hint="@string/order_date"
-            android:padding="5dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textColorHint="@color/colorPrimaryDark" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/delivery_date_edit"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_date"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/order_date_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@color/deep_purple"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_date"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:gravity="fill"
+                android:hint="@string/order_date"
+                android:padding="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="@color/colorPrimaryDark" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/InfoView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:background="@color/deep_purple"
-            android:clickable="true"
-            android:drawableRight="@drawable/ic_date"
-            android:drawableTint="@color/colorPrimaryDark"
-            android:gravity="fill"
-            android:hint="@string/delivery"
-            android:padding="5dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textColorHint="@color/colorPrimaryDark" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delivery"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/delivery_date_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+
+                android:background="@color/deep_purple"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_date"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:gravity="fill"
+                android:hint="@string/delivery"
+                android:padding="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="@color/colorPrimaryDark" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

@@ -129,7 +129,7 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
                 }
                 break;
             case INVOICE_ITEM_EDIT_REQUEST:
-                String json = data.getStringExtra(EXTRA_SEARCH_RESULT);
+                
                 Invoice tempInvoice = Invoice.fromJSON(json);
                 int position = data.getIntExtra(EXTRA_SELECTED_ITEM_INDEX, -1);
                 Invoice invoice = collection.getInvoiceList().get(position);
@@ -138,7 +138,7 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
                 mAdapter.notifyItemChanged(position);
                 double total = 0;
                 for (Invoice item : collection.getInvoiceList()) {
-                    total += item.getPendingAmount();
+                    total += item.getCollectedAmount();
                 }
                 tvTotalAmount.setText(formatPrice(total));
                 break;

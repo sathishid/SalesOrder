@@ -44,6 +44,10 @@
         <item>Cash</item>
         <item>Credit</item>
     </string-array>
+    <string-array name="collection_mode">
+        <item>Cash</item>
+        <item>Bank</item>
+    </string-array>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->

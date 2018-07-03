@@ -35,6 +35,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.getApproveListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getBrandListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getProductListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
+import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 public class ListHelperActivity extends AppCompatActivity {
 
@@ -103,6 +104,10 @@ public class ListHelperActivity extends AppCompatActivity {
         switch (requestCode) {
             case LIST_APPROVE_ID_REQUEST:
                 List<Approval> approvalList = Approval.fromJSONArray(json);
+                if (approvalList.size() == 0) {
+                    showSnackbar(listView, "No Approval ids..");
+                    return;
+                }
                 ArrayAdapter<Approval> approvalArrayAdapter = new ArrayAdapter<Approval>(
                         listView.getContext(),
                         R.layout.support_simple_spinner_dropdown_item,

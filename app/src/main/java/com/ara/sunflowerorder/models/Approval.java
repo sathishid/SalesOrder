@@ -3,6 +3,7 @@ package com.ara.sunflowerorder.models;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,6 +45,9 @@ public class Approval {
     public static List<Approval> fromJSONArray(String json) {
         Gson gson = getGson();
         Approval[] approvals = gson.fromJson(json, Approval[].class);
+        if (approvals == null) {
+            return new ArrayList<>(0);
+        }
         return Arrays.asList(approvals);
     }
 
