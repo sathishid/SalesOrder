@@ -19,6 +19,7 @@
     <string name="submit_order">Submit Order</string>
     <string name="approval_no">Approval No</string>
     <string name="quantity">Quantity</string>
+    <string name="qty">Qty</string>
     <string name="submit_delivery">Submit Delivery</string>
     <string name="ordered_quantity">Ordered Quantity</string>
     <string name="rejected_quantity">Rejected Quantity</string>
@@ -62,4 +63,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="sales_order_report">Sales Order Report</string>
+    <string name="collection_report">Collection Report</string>
+    <string name="delivery_report">Delivery Report</string>
+    <string name="delivery_item_title">Delivery an Item</string>
+    <string name="collection_title">Collection</string>
 </resources>

@@ -117,6 +117,7 @@ public class DeliveryReportActivity extends AppCompatActivity {
                         } else {
                             String strResponse = response.getMesssage();
                             if (strResponse.isEmpty() || strResponse.equalsIgnoreCase("[]")) {
+                                recyclerView.setVisibility(View.GONE);
                                 showSnackbar(recyclerView, "No data found.");
                             } else {
                                 List<DeliveryReport> deliveryReportList = DeliveryReport.fromJsonArray(response.getMesssage());

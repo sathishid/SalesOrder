@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ara.sunflowerorder.models.Invoice;
@@ -34,7 +35,7 @@ public class InvoceItemActivity extends AppCompatActivity {
     @BindView(R.id.tv_invoice_balance_amt)
     TextView tvBalanceAmount;
     @BindView(R.id.ed_invoice_coll_amt)
-    TextView edCollectionAmount;
+    EditText edCollectionAmount;
     @BindView(R.id.tv_invoice_pending_amt)
     TextView tvPendingAmount;
 
@@ -46,6 +47,7 @@ public class InvoceItemActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent data = getIntent();
         String json = data.getStringExtra(EXTRA_SELECTED_INVOICE_ITEM);
+        position=data.getIntExtra(EXTRA_SELECTED_ITEM_INDEX,-1);
         invoice = Invoice.fromJSON(json);
 
         tvInvoiceNo.setText(invoice.getNo() + "");
@@ -54,6 +56,7 @@ public class InvoceItemActivity extends AppCompatActivity {
         tvPaidAmount.setText(formatPrice(invoice.getPaidAmount()));
         tvBalanceAmount.setText(formatPrice(invoice.getBalanceAmount()));
         tvPendingAmount.setText(formatPrice(invoice.getBalanceAmount()));
+        edCollectionAmount.setText(formatPrice(invoice.getCollectedAmount()));
     }
 
     @OnClick(R.id.btn_invoice_update)

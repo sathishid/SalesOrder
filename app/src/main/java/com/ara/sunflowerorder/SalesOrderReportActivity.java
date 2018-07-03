@@ -119,6 +119,7 @@ public class SalesOrderReportActivity extends AppCompatActivity {
                         } else {
                             String strResponse = response.getMesssage();
                             if (strResponse.isEmpty() || strResponse.equalsIgnoreCase("[]")) {
+                                recyclerView.setVisibility(View.GONE);
                                 showSnackbar(recyclerView, "No data found.");
                             } else {
                                 List<SalesOrderReport> salesOrderReportList = SalesOrderReport.fromJsonArray(response.getMesssage());

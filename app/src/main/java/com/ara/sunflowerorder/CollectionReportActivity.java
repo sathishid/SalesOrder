@@ -119,6 +119,7 @@ public class CollectionReportActivity extends AppCompatActivity {
                         } else {
                             String strResponse = response.getMesssage();
                             if (strResponse.isEmpty() || strResponse.equalsIgnoreCase("[]")) {
+                                recyclerView.setVisibility(View.GONE);
                                 showSnackbar(recyclerView, "No data found.");
                             } else {
                                 List<CollectionReport> collectionReportList = CollectionReport.fromJsonArray(response.getMesssage());

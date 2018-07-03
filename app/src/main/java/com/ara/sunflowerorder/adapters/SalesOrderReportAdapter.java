@@ -50,7 +50,8 @@ public class SalesOrderReportAdapter extends RecyclerView.Adapter<SalesOrderRepo
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListner.onItemClick(mValues.get(position), position);
+                if (onItemClickListner != null)
+                    onItemClickListner.onItemClick(mValues.get(position), position);
             }
         });
     }

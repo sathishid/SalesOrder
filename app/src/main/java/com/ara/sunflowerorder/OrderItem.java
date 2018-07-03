@@ -88,6 +88,9 @@ public class OrderItem extends AppCompatActivity {
             case LIST_BRAND_REQUEST:
                 this.brand = Brand.fromJSON(result);
                 tvBrandName.setText(this.brand.getName());
+                tvProductName.setText(R.string.product_name);
+                tvProductCode.setText(R.string.product_code);
+                orderItemModel.setProduct(null);
                 break;
             case List_PRODUCT_REQUEST:
                 Product product = Product.fromJSON(result);

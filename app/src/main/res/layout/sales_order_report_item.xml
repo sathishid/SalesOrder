@@ -43,18 +43,18 @@
         <TextView
             android:id="@+id/so_rpt_product"
             android:textColor="@color/colorPrimaryDark"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.60"
             android:text="@string/product_name_alone" />
 
         <TextView
             android:id="@+id/so_rpt_uom"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
             android:layout_gravity="right"
-            android:layout_weight="1"
+            android:layout_weight="0.40"
             android:gravity="right"
             android:text="@string/uom" />
 
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
 
-                android:text="@string/quantity" />
+                android:text="@string/qty" />
         </LinearLayout>
 
         <LinearLayout

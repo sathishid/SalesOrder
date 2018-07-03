@@ -129,7 +129,8 @@ public class CollectionActivity extends AppCompatActivity implements ListViewCli
                 }
                 break;
             case INVOICE_ITEM_EDIT_REQUEST:
-                
+                String json = data.getStringExtra(EXTRA_SEARCH_RESULT);
+
                 Invoice tempInvoice = Invoice.fromJSON(json);
                 int position = data.getIntExtra(EXTRA_SELECTED_ITEM_INDEX, -1);
                 Invoice invoice = collection.getInvoiceList().get(position);
