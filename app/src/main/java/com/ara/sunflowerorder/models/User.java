@@ -3,19 +3,17 @@ package com.ara.sunflowerorder.models;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import static com.ara.sunflowerorder.utils.AppConstants.getGson;
 
 public class User {
-    @SerializedName("userid")
+
+    @SerializedName("user_id")
     private int id;
+
     private String userId;
-    @SerializedName("username")
+    @SerializedName("user_name")
     private String userName;
-    @SerializedName("branch_id")
+    @SerializedName("user_branch_ids")
     private String branchId;
 
     public String getBranchId() {
@@ -56,20 +54,7 @@ public class User {
     }
 
     public static User fromJson(String message) {
-
-        try {
-            JSONObject reader = new JSONObject(message);
-
-            User user = new User();
-
-
-            user.id = Integer.parseInt(reader.getString("user_id"));
-            user.branchId = reader.getString("user_branch_ids");
-            user.userName = reader.getString("user_name");
-
-            return user;
-        } catch (JSONException jsonException) {
-            return null;
-        }
+        Gson gson = getGson();
+        return gson.fromJson(message, User.class);
     }
 }
