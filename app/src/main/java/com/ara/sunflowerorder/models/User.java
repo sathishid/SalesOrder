@@ -58,13 +58,14 @@ public class User {
     public static User fromJson(String message) {
 
         try {
-            JSONArray jsonArray = new JSONArray(message);
-            User user = new User();
-            JSONObject reader = jsonArray.getJSONObject(0);
+            JSONObject reader = new JSONObject(message);
 
-            user.id = Integer.parseInt(reader.getString("userid"));
-            user.branchId = reader.getString("branch_id");
-            user.userName = reader.getString("username");
+            User user = new User();
+
+
+            user.id = Integer.parseInt(reader.getString("user_id"));
+            user.branchId = reader.getString("user_branch_ids");
+            user.userName = reader.getString("user_name");
 
             return user;
         } catch (JSONException jsonException) {

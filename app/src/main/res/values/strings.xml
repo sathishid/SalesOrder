@@ -13,6 +13,7 @@
     <string name="product_code">Product Code</string>
     <string name="available_quantity">Available Quantity</string>
     <string name="order_quantity">Order Quantity</string>
+    <string name="sample_quantity">1</string>
     <string name="price">Price</string>
     <string name="total_amount">Total Amount</string>
     <string name="add_order_item">Add an Order Item</string>
@@ -70,4 +71,7 @@
     <string name="collection_title">Collection</string>
     <string name="balance_amount">Balance Amount</string>
     <string name="logout">Logout</string>
+    <string name="accepted_quantities">Accepted</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="collected">Collected Amount</string>
 </resources>

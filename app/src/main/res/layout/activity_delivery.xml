@@ -152,26 +152,44 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
         android:weightSum="2">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
+        <LinearLayout
+            style="@style/InfoView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:background="@color/deep_purple"
-            android:clickable="true"
-            android:drawableRight="@drawable/ic_right_arrow"
-            android:drawableTint="@color/colorPrimaryDark"
-            android:gravity="center"
-            android:text="@string/remarks"
-            android:textColor="@color/colorPrimaryDark"
-            android:visibility="gone" />
+            android:orientation="vertical">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/accepted_quantities"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/delivery_accepted_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@color/deep_purple"
+
+                android:gravity="center"
+                android:hint="@string/sample_quantity"
+                android:padding="4dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="@color/colorPrimaryDark" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/submit_delivery"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:gravity="center"

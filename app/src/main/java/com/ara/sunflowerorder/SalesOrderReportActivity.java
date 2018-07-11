@@ -105,8 +105,7 @@ public class SalesOrderReportActivity extends AppCompatActivity {
                 httpRequest.addParam(USER_ID_PARAM, CurrentUser.getId() + "");
                 String strFromDate = fromDate.getText().toString();
                 String strToDate = toDate.getText().toString();
-                strFromDate = strFromDate.replace('-', '/');
-                strToDate = strToDate.replace('-', '/');
+
                 httpRequest.addParam(FROM_DATE_PARAM, strFromDate);
                 httpRequest.addParam(TO_DATE_PARAM, strToDate);
                 progressDialog = showProgressBar(this, "Delivery Report..");

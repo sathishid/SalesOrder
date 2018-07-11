@@ -41,11 +41,10 @@ public class CollectionReportAdapter extends RecyclerView.Adapter<CollectionRepo
         holder.mCustomerName.setText(collectionReport.getCustomerName());
 
         holder.mdate.setText(collectionReport.getDate());
-        holder.mPaymentMode.setText(collectionReport.getModeOfPayment());
 
-        holder.mInvoiceAmt.setText(formatPrice(collectionReport.getInvoiceAmt()));
+
         holder.mCollectionAmt.setText(formatPrice(collectionReport.getCollectionAmt()));
-        holder.mBalanceAmt.setText(formatPrice(collectionReport.getBalanceAmt()));
+        holder.mInvoiceNo.setText(collectionReport.getInvoiceNo());
 
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -67,11 +66,9 @@ public class CollectionReportAdapter extends RecyclerView.Adapter<CollectionRepo
         public final TextView mCollectionNo;
         public final TextView mCustomerName;
         public final TextView mdate;
-        public final TextView mPaymentMode;
-        ;
-        public final TextView mInvoiceAmt;
+
         public final TextView mCollectionAmt;
-        public final TextView mBalanceAmt;
+        public final TextView mInvoiceNo;
 
         public CollectionReport mItem;
 
@@ -81,10 +78,10 @@ public class CollectionReportAdapter extends RecyclerView.Adapter<CollectionRepo
             mCollectionNo = view.findViewById(R.id.coll_rpt_no);
             mCustomerName = view.findViewById(R.id.coll_rpt_customer);
             mdate = view.findViewById(R.id.coll_rpt_date);
-            mPaymentMode = view.findViewById(R.id.coll_rpt_mode);
-            mInvoiceAmt = view.findViewById(R.id.coll_rpt_inv_amt);
+
+            mInvoiceNo = view.findViewById(R.id.coll_rpt_inv_no);
             mCollectionAmt = view.findViewById(R.id.coll_rpt_coll_amt);
-            mBalanceAmt = view.findViewById(R.id.coll_rpt_balance_amt);
+
         }
 
         @Override

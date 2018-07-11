@@ -16,7 +16,6 @@ import com.ara.sunflowerorder.models.Approval;
 import com.ara.sunflowerorder.models.Customer;
 import com.ara.sunflowerorder.models.Delivery;
 import com.ara.sunflowerorder.models.DeliveryItem;
-import com.ara.sunflowerorder.models.Product;
 import com.ara.sunflowerorder.utils.AppConstants;
 import com.ara.sunflowerorder.utils.http.HttpCaller;
 import com.ara.sunflowerorder.utils.http.HttpRequest;
@@ -69,6 +68,9 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
 
     @BindView(R.id.delivery_total_qty)
     TextView tv_totalQty;
+
+    @BindView(R.id.delivery_accepted_quantity)
+    TextView tv_acceptedQty;
 
     DeliveryActivity thisActivity;
 
@@ -144,7 +146,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
                 Approval approval = Approval.fromJSON(json);
                 deliveryModel.setCustomer(customer);
                 deliveryModel.setApproval(approval);
-                tv_approveId.setText(deliveryModel.getApproval().getApproveNo()+ "");
+                tv_approveId.setText(deliveryModel.getApproval().getApproveNo() + "");
                 tv_deliveryDate.setText(deliveryModel.getApproval().getDate());
                 progressDialog = showProgressBar(this, "Loading Products");
                 HttpRequest httpRequest = new HttpRequest(getApprovedProducts(), HttpRequest.GET);
@@ -163,6 +165,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
                             recyclerView.setAdapter(mAdapter);
                             recyclerView.setVisibility(View.VISIBLE);
                             updateTotal();
+                            updateAccepted();
                         }
                         progressDialog.dismiss();
                     }
@@ -174,7 +177,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
                 int position = data.getIntExtra(EXTRA_SELECTED_ITEM_INDEX, -1);
                 DeliveryItem deliveryItem = DeliveryItem.fromJSON(json);
                 updateRecyclerView(deliveryItem, position);
-                updateTotal();
+                updateAccepted();
                 break;
         }
     }
@@ -211,9 +214,17 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
     private void updateTotal() {
         int total = 0;
         for (DeliveryItem item : deliveryModel.getDeliveryItems()) {
-            total += item.getAccept();
+            total += item.getQuantity();
         }
         tv_totalQty.setText(total + "");
+    }
+
+    private void updateAccepted() {
+        int total = 0;
+        for (DeliveryItem item : deliveryModel.getDeliveryItems()) {
+            total += item.getAccept();
+        }
+        tv_acceptedQty.setText(total + "");
     }
 
     @OnClick(R.id.submit_delivery)
@@ -228,7 +239,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
         deliveryModel.setDeliveryDate(tv_deliveryTodayDate.getText().toString());
 
         httpRequest.addParam("data", deliveryModel.toJson());
-        Log.i("Delivery Submit",deliveryModel.toJson());
+        Log.i("Delivery Submit", deliveryModel.toJson());
         progressDialog = showProgressBar(this, "Submitting..");
         new HttpCaller() {
             @Override

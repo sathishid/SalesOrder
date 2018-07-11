@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             String userJson = sharedPreferences.getString(USER_INFO_STORAGE, null);
             CurrentUser = User.fromJson(userJson);
         } else {
-
             Intent intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, LOGIN_REQUEST);
         }
