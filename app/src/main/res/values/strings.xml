@@ -68,4 +68,6 @@
     <string name="delivery_report">Delivery Report</string>
     <string name="delivery_item_title">Delivery an Item</string>
     <string name="collection_title">Collection</string>
+    <string name="balance_amount">Balance Amount</string>
+    <string name="logout">Logout</string>
 </resources>

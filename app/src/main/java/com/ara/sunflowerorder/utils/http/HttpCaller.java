@@ -88,7 +88,7 @@ public class HttpCaller extends AsyncTask<HttpRequest, String, HttpResponse> {
     @Override
     protected void onPostExecute(HttpResponse response) {
 
-        super.onPostExecute(response);
+
 
         onResponse(response);
     }

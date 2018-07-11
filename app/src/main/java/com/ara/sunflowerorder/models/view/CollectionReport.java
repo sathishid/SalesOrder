@@ -84,11 +84,12 @@ public class CollectionReport {
     }
 
     public static List<CollectionReport> fromJsonArray(String messsage) {
-        if (messsage == null) {
-            return new ArrayList<>();
-        }
         Gson gson = getGson();
         CollectionReport[] collectionReports = gson.fromJson(messsage, CollectionReport[].class);
+        if (collectionReports == null) {
+            return new ArrayList<>();
+        }
+
         return Arrays.asList(collectionReports);
 
     }

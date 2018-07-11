@@ -103,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/invoice_no" />
+            android:text="@string/balance_amount" />
 
         <TextView
             android:id="@+id/tv_invoice_balance_amt"

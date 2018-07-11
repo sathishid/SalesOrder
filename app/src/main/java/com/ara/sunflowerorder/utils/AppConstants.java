@@ -41,6 +41,7 @@ public class AppConstants {
     public static final int FROM_DATE_REQUEST = 115;
     public static final int TO_DATE_REQUEST = 116;
 
+
     public static final String EXTRA_SEARCH_RESULT = "SearchResult";
     public static final String EXTRA_SELECTED_CUSTOMER = "selectedCustomer";
     public static final String EXTRA_ADD_ITEM = "OrderItem";
@@ -49,7 +50,8 @@ public class AppConstants {
     public static final String EXTRA_SELECTED_ITEM_INDEX = "SelectedIndex";
     public static final String EXTRA_SELECTED_INVOICE_ITEM = "Invoice Item";
     public static final String EXTRA_DATE_RESULT = "dateResult";
-
+    public static final String PREFERENCE_NAME = "Sunflower_order";
+    public static final String USER_INFO_STORAGE="UserInfo";
 
     public static final String DATE_PICKER_ORDER_TAG = "Pick a Order Date";
     public static final String DATE_PICKER_DELIVERY_TAG = "Pick a Delivery Date";
@@ -157,7 +159,7 @@ public class AppConstants {
         progressDialog.setIndeterminate(true);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setMessage(progressMessage);
-        progressDialog.show();
+
         return progressDialog;
     }
 

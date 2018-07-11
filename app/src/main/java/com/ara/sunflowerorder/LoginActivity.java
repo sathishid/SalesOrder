@@ -4,14 +4,11 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.ara.sunflowerorder.models.User;
 import com.ara.sunflowerorder.utils.AppConstants;
@@ -22,7 +19,6 @@ import com.ara.sunflowerorder.utils.http.HttpResponse;
 import static com.ara.sunflowerorder.utils.AppConstants.PASSWORD_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.USER_ID_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.getUserLoginURL;
-import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
 import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
 /**
@@ -33,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     // UI references.
     private AutoCompleteTextView mUserIdView;
     private EditText mPasswordView;
-    private View mProgressView;
+
     private View mLoginFormView;
 
     ProgressDialog progressDialog;
@@ -47,16 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -110,11 +97,19 @@ public class LoginActivity extends AppCompatActivity {
             HttpRequest httpRequest = new HttpRequest(getUserLoginURL(), HttpRequest.POST);
             httpRequest.addParam(USER_ID_PARAM, mUserIdView.getText().toString());
             httpRequest.addParam(PASSWORD_PARAM, mPasswordView.getText().toString());
-            progressDialog = showProgressBar(this, "Validating User..");
+
+            progressDialog = new ProgressDialog(this, R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setMessage("Validating User..");
+
+
+            progressDialog.show();
             new HttpCaller() {
                 @Override
                 public void onResponse(HttpResponse response) {
                     progressDialog.dismiss();
+
                     if (response.getStatus() == HttpResponse.ERROR) {
                         showSnackbar(mLoginFormView, response.getMesssage());
                     } else {
@@ -123,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                             showSnackbar(mLoginFormView, "Server not Responding...");
                         } else if (message.contains("fail")) {
                             showSnackbar(mLoginFormView, "Login Failed..");
+                            progressDialog.dismiss();
                         } else {
                             AppConstants.CurrentUser = User.fromJson(message);
                             setResult(RESULT_OK);
@@ -132,6 +128,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }.execute(httpRequest);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     private boolean isPasswordValid(String password) {

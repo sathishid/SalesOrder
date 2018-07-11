@@ -1,6 +1,7 @@
 package com.ara.sunflowerorder;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.ara.sunflowerorder.models.User;
 import com.ara.sunflowerorder.utils.AppConstants;
 
 import butterknife.ButterKnife;
@@ -19,7 +21,10 @@ import butterknife.OnClick;
 import static com.ara.sunflowerorder.utils.AppConstants.ADD_COLLECTION_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.ADD_DELIVERY_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.ADD_SALES_ORDER_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
 import static com.ara.sunflowerorder.utils.AppConstants.LOGIN_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.PREFERENCE_NAME;
+import static com.ara.sunflowerorder.utils.AppConstants.USER_INFO_STORAGE;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,9 +35,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivityForResult(intent, LOGIN_REQUEST);
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCE_NAME, MODE_PRIVATE);
+        if (sharedPreferences.contains(USER_INFO_STORAGE)) {
+            String userJson = sharedPreferences.getString(USER_INFO_STORAGE, null);
+            CurrentUser = User.fromJson(userJson);
+        } else {
 
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, LOGIN_REQUEST);
+        }
 
     }
 
@@ -71,7 +82,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 AppConstants.showSnackbar(relativeLayout, "Collection made Successfully");
                 break;
             case LOGIN_REQUEST:
-                //Do it if need to do after login.
+                SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCE_NAME, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(USER_INFO_STORAGE, CurrentUser.toJson());
+                editor.commit();
+
+
                 break;
         }
     }
@@ -112,6 +128,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this, DeliveryReportActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.nav_logout:
+                SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCE_NAME, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                intent = new Intent(this, LoginActivity.class);
+                startActivityForResult(intent, LOGIN_REQUEST);
+
+                break;
         }
 
         return super.onOptionsItemSelected(item);
