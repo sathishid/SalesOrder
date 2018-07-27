@@ -74,4 +74,5 @@
     <string name="accepted_quantities">Accepted</string>
     <string name="customer_name">Customer Name</string>
     <string name="collected">Collected Amount</string>
+    <string name="select_a_warehouse">Select a Warehouse</string>
 </resources>

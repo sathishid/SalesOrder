@@ -18,6 +18,7 @@ import com.ara.sunflowerorder.utils.http.HttpResponse;
 
 import static com.ara.sunflowerorder.utils.AppConstants.PASSWORD_PARAM;
 import static com.ara.sunflowerorder.utils.AppConstants.USER_ID_PARAM;
+import static com.ara.sunflowerorder.utils.AppConstants.fetchWarehouse;
 import static com.ara.sunflowerorder.utils.AppConstants.getUserLoginURL;
 import static com.ara.sunflowerorder.utils.AppConstants.showSnackbar;
 
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        fetchWarehouse();
         // Set up the login form.
         mUserIdView = (AutoCompleteTextView) findViewById(R.id.userid);
 

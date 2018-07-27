@@ -6,9 +6,8 @@
     android:background="@drawable/background"
     android:padding="5dp"
     tools:context=".DeliveryActivity">
-
     <TextView
-        android:id="@+id/tv_delivery_customer"
+        android:id="@+id/tv_delivery_warehouse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/deep_purple"
@@ -17,7 +16,22 @@
         android:drawableTint="@color/colorPrimaryDark"
         android:gravity="center|left"
         android:padding="5dp"
+        android:text="@string/select_a_warehouse"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <TextView
+        android:id="@+id/tv_delivery_customer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/deep_purple"
+        android:layout_marginTop="@dimen/item_spacing"
+        android:clickable="true"
+        android:drawableRight="@drawable/ic_right_arrow"
+        android:drawableTint="@color/colorPrimaryDark"
+        android:gravity="center|left"
+        android:padding="5dp"
         android:text="@string/select_customer"
+        android:layout_below="@id/tv_delivery_warehouse"
         android:textColor="@color/colorPrimaryDark" />
 
     <LinearLayout

@@ -25,6 +25,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
 import static com.ara.sunflowerorder.utils.AppConstants.LOGIN_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.PREFERENCE_NAME;
 import static com.ara.sunflowerorder.utils.AppConstants.USER_INFO_STORAGE;
+import static com.ara.sunflowerorder.utils.AppConstants.fetchWarehouse;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        fetchWarehouse();
 
         SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCE_NAME, MODE_PRIVATE);
         if (sharedPreferences.contains(USER_INFO_STORAGE)) {
@@ -158,4 +161,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

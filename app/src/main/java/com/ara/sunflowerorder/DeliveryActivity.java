@@ -16,6 +16,7 @@ import com.ara.sunflowerorder.models.Approval;
 import com.ara.sunflowerorder.models.Customer;
 import com.ara.sunflowerorder.models.Delivery;
 import com.ara.sunflowerorder.models.DeliveryItem;
+import com.ara.sunflowerorder.models.Warehouse;
 import com.ara.sunflowerorder.utils.AppConstants;
 import com.ara.sunflowerorder.utils.http.HttpCaller;
 import com.ara.sunflowerorder.utils.http.HttpRequest;
@@ -36,8 +37,10 @@ import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_CUSTOMER;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_DELIVERY_ITEM;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_ITEM_INDEX;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_APPROVE_ID_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.LIST_WAREHOUSE_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_FOR_DELIVERY_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.fetchWarehouse;
 import static com.ara.sunflowerorder.utils.AppConstants.getApprovedProducts;
 import static com.ara.sunflowerorder.utils.AppConstants.getDeliverySubmitURL;
 import static com.ara.sunflowerorder.utils.AppConstants.showProgressBar;
@@ -72,6 +75,9 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
     @BindView(R.id.delivery_accepted_quantity)
     TextView tv_acceptedQty;
 
+    @BindView(R.id.tv_delivery_warehouse)
+    TextView tv_deliveryWarehouse;
+
     DeliveryActivity thisActivity;
 
     ProgressDialog progressDialog;
@@ -81,6 +87,7 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery);
         ButterKnife.bind(this);
+        fetchWarehouse();
         getSupportActionBar().hide();
         tv_deliveryTodayDate.setText(AppConstants.dateToString(Calendar.getInstance()));
         recyclerView = findViewById(R.id.delivery_item_list_view);
@@ -99,6 +106,13 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
 
         //Used in the inner classes like HttpCaller
         thisActivity = this;
+    }
+
+    @OnClick(R.id.tv_delivery_warehouse)
+    public void chooseWarehouse(View view) {
+        Intent intent = new Intent(this, ListHelperActivity.class);
+        intent.putExtra(REQUEST_CODE, LIST_WAREHOUSE_REQUEST);
+        startActivityForResult(intent, LIST_WAREHOUSE_REQUEST);
     }
 
     @OnClick(R.id.tv_delivery_customer)
@@ -178,6 +192,12 @@ public class DeliveryActivity extends AppCompatActivity implements ListViewClick
                 DeliveryItem deliveryItem = DeliveryItem.fromJSON(json);
                 updateRecyclerView(deliveryItem, position);
                 updateAccepted();
+                break;
+            case LIST_WAREHOUSE_REQUEST:
+                json = data.getStringExtra(EXTRA_SEARCH_RESULT);
+                Warehouse warehouse = Warehouse.fromJson(json);
+                deliveryModel.setWarehouse(warehouse);
+                tv_deliveryWarehouse.setText(warehouse.getName());
                 break;
         }
     }

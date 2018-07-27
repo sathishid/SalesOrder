@@ -16,6 +16,15 @@ public class Delivery {
     private Approval approval;
     private List<DeliveryItem> deliveryItems;
     private String remarks;
+    private Warehouse warehouse;
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
 
     public Delivery() {
     }

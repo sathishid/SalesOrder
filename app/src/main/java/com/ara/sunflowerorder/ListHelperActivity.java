@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.ara.sunflowerorder.models.Approval;
 import com.ara.sunflowerorder.models.Brand;
 import com.ara.sunflowerorder.models.Product;
+import com.ara.sunflowerorder.models.Warehouse;
 import com.ara.sunflowerorder.utils.http.HttpCaller;
 import com.ara.sunflowerorder.utils.http.HttpRequest;
 import com.ara.sunflowerorder.utils.http.HttpResponse;
@@ -29,8 +30,10 @@ import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SELECTED_CUSTOMER;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_APPROVE_ID_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.LIST_BRAND_REQUEST;
+import static com.ara.sunflowerorder.utils.AppConstants.LIST_WAREHOUSE_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.List_PRODUCT_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
+import static com.ara.sunflowerorder.utils.AppConstants.WarehouseList;
 import static com.ara.sunflowerorder.utils.AppConstants.getApproveListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getBrandListURL;
 import static com.ara.sunflowerorder.utils.AppConstants.getProductListURL;
@@ -75,11 +78,16 @@ public class ListHelperActivity extends AppCompatActivity {
                 httpRequest = new HttpRequest(getProductListURL(), HttpRequest.GET);
                 httpRequest.addParam(BRAND_ID_PARAM, searchId + "");
                 break;
+
         }
         return httpRequest;
     }
 
     public void fetchData() {
+        if (requestCode == LIST_WAREHOUSE_REQUEST) {
+            setListView(null);
+            return;
+        }
         HttpRequest httpRequest = getHttpRequest();
         if (httpRequest == null) {
             Snackbar.make(listView, "Mr Developer: Please set the Request Code:",
@@ -134,6 +142,14 @@ public class ListHelperActivity extends AppCompatActivity {
                 );
                 listView.setAdapter(products);
                 break;
+            case LIST_WAREHOUSE_REQUEST:
+                ArrayAdapter<Warehouse> warehouseArrayAdapter = new ArrayAdapter<Warehouse>(
+                        listView.getContext(),
+                        R.layout.support_simple_spinner_dropdown_item,
+                        WarehouseList
+                );
+                listView.setAdapter(warehouseArrayAdapter);
+                break;
         }
     }
 
@@ -159,6 +175,10 @@ public class ListHelperActivity extends AppCompatActivity {
             case List_PRODUCT_REQUEST:
                 Product product = (Product) listView.getAdapter().getItem(position);
                 result = product.toJson();
+                break;
+            case LIST_WAREHOUSE_REQUEST:
+                Warehouse warehouse = (Warehouse) listView.getAdapter().getItem(position);
+                result = warehouse.toJson();
                 break;
 
         }

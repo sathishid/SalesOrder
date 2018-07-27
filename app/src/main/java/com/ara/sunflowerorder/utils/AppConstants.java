@@ -10,10 +10,15 @@ import android.widget.SpinnerAdapter;
 import com.ara.sunflowerorder.R;
 import com.ara.sunflowerorder.models.SalesOrder;
 import com.ara.sunflowerorder.models.User;
+import com.ara.sunflowerorder.models.Warehouse;
+import com.ara.sunflowerorder.utils.http.HttpCaller;
+import com.ara.sunflowerorder.utils.http.HttpRequest;
+import com.ara.sunflowerorder.utils.http.HttpResponse;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import okhttp3.MediaType;
 
@@ -40,6 +45,7 @@ public class AppConstants {
     public static final int DELIVERY_DATE_REQUEST = 114;
     public static final int FROM_DATE_REQUEST = 115;
     public static final int TO_DATE_REQUEST = 116;
+    public static final int LIST_WAREHOUSE_REQUEST=117;
 
 
     public static final String EXTRA_SEARCH_RESULT = "SearchResult";
@@ -51,7 +57,7 @@ public class AppConstants {
     public static final String EXTRA_SELECTED_INVOICE_ITEM = "Invoice Item";
     public static final String EXTRA_DATE_RESULT = "dateResult";
     public static final String PREFERENCE_NAME = "Sunflower_order";
-    public static final String USER_INFO_STORAGE="UserInfo";
+    public static final String USER_INFO_STORAGE = "UserInfo";
 
     public static final String DATE_PICKER_ORDER_TAG = "Pick a Order Date";
     public static final String DATE_PICKER_DELIVERY_TAG = "Pick a Delivery Date";
@@ -68,7 +74,7 @@ public class AppConstants {
     public static final String PASSWORD_PARAM = "password";
     public static final String ENTRY_ID_PARAM = "so_entry_id";
     public static User CurrentUser = null;
-
+    public static List<Warehouse> WarehouseList;
 
     public static String getUserLoginURL() {
         return REST_API + "login";
@@ -88,6 +94,10 @@ public class AppConstants {
 
     public static String getApprovedProducts() {
         return REST_API + "so_approvel_product";
+    }
+
+    public static String getWarehouseList() {
+        return REST_API + "godown";
     }
 
     public static String getProductListURL() {
@@ -173,5 +183,25 @@ public class AppConstants {
         } catch (NumberFormatException numberFormatException) {
             return 0;
         }
+    }
+
+    public static List<Warehouse> fetchWarehouse() {
+        if(WarehouseList!=null && WarehouseList.size()>0){
+            return WarehouseList;
+        }
+
+        HttpRequest httpRequest = new HttpRequest(getWarehouseList(), HttpRequest.GET);
+
+        new HttpCaller() {
+            @Override
+            public void onResponse(HttpResponse response) {
+                if (response.getStatus() == HttpResponse.ERROR) {
+                    WarehouseList = new ArrayList<>();
+                } else {
+                    WarehouseList = Warehouse.fromJsonArray(response.getMesssage());
+                }
+            }
+        }.execute(httpRequest);
+        return WarehouseList;
     }
 }
