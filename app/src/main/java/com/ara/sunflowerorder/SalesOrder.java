@@ -22,12 +22,14 @@ import com.ara.sunflowerorder.utils.http.HttpResponse;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.ara.sunflowerorder.utils.AppConstants.ADD_ITEM_REQUEST;
+
 import static com.ara.sunflowerorder.utils.AppConstants.CurrentUser;
 import static com.ara.sunflowerorder.utils.AppConstants.DELIVERY_DATE_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_ADD_ITEM;
@@ -35,6 +37,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_DATE_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.EXTRA_SEARCH_RESULT;
 import static com.ara.sunflowerorder.utils.AppConstants.ORDER_DATE_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
+import static com.ara.sunflowerorder.utils.AppConstants.SALES_ORDER;
 import static com.ara.sunflowerorder.utils.AppConstants.SEARCH_CUSTOMER_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.formatPrice;
 import static com.ara.sunflowerorder.utils.AppConstants.getSalesOrderSubmitURL;
@@ -64,20 +67,23 @@ public class SalesOrder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_order);
+
         getSupportActionBar().hide();
         mRecyclerView = findViewById(R.id.order_item_list_view);
+        salesOrderModel = new com.ara.sunflowerorder.models.SalesOrder();
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
+        salesOrderModel.setItems(new ArrayList<OrderItem>());
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        salesOrderModel = new com.ara.sunflowerorder.models.SalesOrder();
+
         mRecyclerView.setVisibility(View.GONE);
-        salesOrderModel.setItems(new ArrayList<OrderItem>());
+
         mAdapter = new OrderItemAdapter(salesOrderModel.getItems());
         mRecyclerView.setAdapter(mAdapter);
         ButterKnife.bind(this);
@@ -110,16 +116,15 @@ public class SalesOrder extends AppCompatActivity {
             case ADD_ITEM_REQUEST:
                 if (resultCode == RESULT_OK) {
                     json = data.getStringExtra(EXTRA_ADD_ITEM);
-                    OrderItem item = OrderItem.fromJson(json);
-                    salesOrderModel.addItem(item);
-                    double total = salesOrderModel.getTotal();
-                    total += item.getPrice() * item.getQuantity();
-                    salesOrderModel.setTotal(total);
-                    total_amount_tv.setText(formatPrice(total));
-                    mAdapter.notifyItemInserted(salesOrderModel.getItems().size() - 1);
-                    if (salesOrderModel.getItems().size() == 1)
-                        mRecyclerView.setVisibility(View.VISIBLE);
 
+                    List<OrderItem> orderItems = OrderItem.fromJsonArray(json);
+                    int index=salesOrderModel.getItems().size()-1;
+                    salesOrderModel.getItems().addAll(orderItems);
+                    total_amount_tv.setText(formatPrice(salesOrderModel.getTotal()));
+
+                    mAdapter.notifyItemRangeChanged(index,orderItems.size());
+                    if (salesOrderModel.getItems().size() >= 1)
+                        mRecyclerView.setVisibility(View.VISIBLE);
                 }
                 break;
             case DELIVERY_DATE_REQUEST:
@@ -198,7 +203,8 @@ public class SalesOrder extends AppCompatActivity {
 
     @OnClick(R.id.btn_order_add_item)
     public void onAddItemClick(View view) {
-        Intent addItemIntent = new Intent(this, com.ara.sunflowerorder.OrderItem.class);
+        Intent addItemIntent = new Intent(this, com.ara.sunflowerorder.MultiOrderActivity.class);
+        addItemIntent.putExtra(SALES_ORDER,salesOrderModel.toJson());
         startActivityForResult(addItemIntent, ADD_ITEM_REQUEST);
     }
 

@@ -96,8 +96,16 @@ public class SalesOrder {
         getItems().add(item);
     }
 
+    public void addItems(List<OrderItem> items){
+        getItems().addAll(items);
+    }
+
     public String toJson() {
         Gson gson=getGson();
         return  gson.toJson(this);
+    }
+    public static SalesOrder fromJson(String json){
+        Gson gson=getGson();
+        return  gson.fromJson(json,SalesOrder.class);
     }
 }

@@ -45,7 +45,7 @@ public class AppConstants {
     public static final int DELIVERY_DATE_REQUEST = 114;
     public static final int FROM_DATE_REQUEST = 115;
     public static final int TO_DATE_REQUEST = 116;
-    public static final int LIST_WAREHOUSE_REQUEST=117;
+    public static final int LIST_WAREHOUSE_REQUEST = 117;
 
 
     public static final String EXTRA_SEARCH_RESULT = "SearchResult";
@@ -59,11 +59,6 @@ public class AppConstants {
     public static final String PREFERENCE_NAME = "Sunflower_order";
     public static final String USER_INFO_STORAGE = "UserInfo";
 
-    public static final String DATE_PICKER_ORDER_TAG = "Pick a Order Date";
-    public static final String DATE_PICKER_DELIVERY_TAG = "Pick a Delivery Date";
-    public static final String DATE_PICKER_FROM_TAG = "Pick a From Date";
-    public static final String DATE_PICKER_TO_TAG = "Pick a To Date";
-
 
     public static final String CUSTOMER_NAME_PARAM = "customer_name";
     public static final String CUSTOMER_ID_PARAM = "customer_id";
@@ -73,6 +68,7 @@ public class AppConstants {
     public static final String USER_ID_PARAM = "user_id";
     public static final String PASSWORD_PARAM = "password";
     public static final String ENTRY_ID_PARAM = "so_entry_id";
+    public static final String SALES_ORDER = "sales_order";
     public static User CurrentUser = null;
     public static List<Warehouse> WarehouseList;
 
@@ -185,8 +181,20 @@ public class AppConstants {
         }
     }
 
+    public static double parseDouble(String intValue) {
+        if (intValue.isEmpty()) {
+            return 0;
+        }
+        try {
+            double value = Double.parseDouble(intValue);
+            return value;
+        } catch (NumberFormatException numberFormatException) {
+            return 0;
+        }
+    }
+
     public static List<Warehouse> fetchWarehouse() {
-        if(WarehouseList!=null && WarehouseList.size()>0){
+        if (WarehouseList != null && WarehouseList.size() > 0) {
             return WarehouseList;
         }
 

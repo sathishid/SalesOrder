@@ -23,6 +23,7 @@ import static com.ara.sunflowerorder.utils.AppConstants.List_PRODUCT_REQUEST;
 import static com.ara.sunflowerorder.utils.AppConstants.REQUEST_CODE;
 import static com.ara.sunflowerorder.utils.AppConstants.parseInt;
 
+@Deprecated
 public class OrderItem extends AppCompatActivity {
 
     com.ara.sunflowerorder.models.OrderItem orderItemModel;

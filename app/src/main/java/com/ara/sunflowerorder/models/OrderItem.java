@@ -4,6 +4,7 @@ import com.ara.sunflowerorder.utils.AppConstants;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class OrderItem {
@@ -57,5 +58,14 @@ public class OrderItem {
     public String toJson() {
         Gson gson = AppConstants.getGson();
         return gson.toJson(this);
+    }
+    public static String toJsonArray(List<OrderItem> orderItems){
+        Gson gson = AppConstants.getGson();
+        return gson.toJson(orderItems);
+    }
+    public static List<OrderItem> fromJsonArray(String json){
+        Gson gson = AppConstants.getGson();
+        OrderItem[] orderItems= gson.fromJson(json,OrderItem[].class);
+        return Arrays.asList(orderItems);
     }
 }

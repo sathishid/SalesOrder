@@ -98,12 +98,13 @@ public class ListHelperActivity extends AppCompatActivity {
         new HttpCaller() {
             @Override
             public void onResponse(HttpResponse response) {
-                progressDialog.dismiss();
+
                 if (response.getStatus() == HttpResponse.ERROR) {
                     Snackbar.make(listView, response.getMesssage(), Snackbar.LENGTH_LONG).show();
                 } else {
                     setListView(response.getMesssage());
                 }
+                progressDialog.dismiss();
             }
         }.execute(httpRequest);
     }
